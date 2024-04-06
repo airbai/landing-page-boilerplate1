@@ -1,43 +1,43 @@
 {
   "Hero": {
-    "title1": "",
-    "title2": "ランディングページ",
-    "title3": "迅速に構築",
-    "description": "無料でオープンソースかつ強力なランディングページのテンプレート。さまざまなプロジェクトに理想的で、1時間以内にランディングページを作成できます。"
+    "title1": "ワンクリックでアンロック",
+    "title2": "GPTs",
+    "title3": "ツールボックス",
+    "description": "簡単で強力なGPTsツールボックスで、マインドマップ、フローチャート、ツリーマップ、PPTなどを迅速に描画し、作業効率を向上させ、複雑なタスクを数分で完了できます。"
   },
   "SocialProof": {
-    "maker": "開発者が迅速に出荷"
+    "maker": "世界中の数万ユーザーの選択"
   },
   "Feature": {
-    "title": "Feature"
+    "title": "機能概要"
   },
   "Pricing": {
-    "title": "価格設定",
-    "title2": "無制限アクセスを取得。",
-    "description": "現在閲覧中のページは、オープンソースで無料のテンプレートです。",
-    "doYouLike": "このランディングページのテンプレートは気に入りましたか？",
-    "follow": "私のTwitterをフォローしてください。"
+    "title": "価格プラン",
+    "title2": "全機能のアンロック",
+    "description": "GPTsオフィスツールボックスを使用して、さまざまな作業タスクを効率的に完了します。",
+    "doYouLike": "当社のオフィスツールボックスに満足していますか？",
+    "follow": "更なる更新のためにフォローしてください。"
   },
   "WallOfLove": {
-    "title": "WallOfLove",
-    "description1": "このランディングページテンプレートを使用してTwitterで推奨した場合、",
-    "description2": "私に知らせてください",
-    "description3": "。あなたのツイートと推薦をここに表示します。"
+    "title": "賞賛の壁",
+    "description1": "当社のツールを使用し、あなたの経験を共有してください。",
+    "description2": "私たちに知らせてください",
+    "description3": "、あなたのフィードバックは私たちが展示する貴重な資産となります。"
   },
   "FAQ": {
-    "title": "FAQs",
-    "description": "最も頻繁に尋ねられる質問はこちらです。"
+    "title": "よくある質問",
+    "description": "ここにはユーザーが最も関心を持っている質問と回答があります。"
   },
   "CTA": {
-    "title": "今すぐあなたのランディングページを構築",
-    "description1": "あなたのランディングページを",
-    "description2": "構築し、",
-    "description3": "あなたの製品を",
-    "description4": "紹介し、そして",
-    "description5": "収益を得始めましょう",
+    "title": "今すぐ効率的なオフィスを体験",
+    "description1": "私たちのツールボックスを使って",
+    "description2": "あなたのワークフローを最適化し、",
+    "description3": "生産性の",
+    "description4": "向上を始めましょう",
+    "description5": "",
     "description6": "！"
   },
   "CTAButton": {
-    "title": "テンプレートを入手"
+    "title": "使い始める"
   }
 }

@@ -1,42 +1,43 @@
 {
   "Hero": {
-    "title1": "",
-    "title2": "Página de aterrizaje",
-    "title3": "construcción rápida"
+    "title1": "Acceso con un Clic",
+    "title2": "GPTs",
+    "title3": "Caja de Herramientas",
+    "description": "Una caja de herramientas GPTs simple y potente que te ayuda a dibujar rápidamente mapas mentales, diagramas de flujo, mapas de árbol, PPTs, etc., mejorando la eficiencia laboral, con tareas complejas completadas en solo minutos."
   },
   "SocialProof": {
-    "maker": "creadores construyen rápido"
+    "maker": "La elección de decenas de miles de usuarios en todo el mundo"
   },
   "Feature": {
-    "title": "Características"
+    "title": "Resumen de Características"
   },
   "Pricing": {
-    "title": "Precios",
-    "title2": "Obtén acceso ilimitado.",
-    "description": "La página que estás viendo actualmente es un template gratuito y de código abierto.",
-    "doYouLike": "¿Te gusta este template para páginas de aterrizaje?",
-    "follow": "Sigue mi Twitter."
+    "title": "Planes de Precios",
+    "title2": "Desbloquea Todas las Funciones",
+    "description": "Usa la caja de herramientas de oficina GPTs para completar eficientemente diversas tareas laborales.",
+    "doYouLike": "¿Estás satisfecho con nuestra caja de herramientas de oficina?",
+    "follow": "Síguenos para obtener más actualizaciones."
   },
   "WallOfLove": {
-    "title": "Muro del Amor",
-    "description1": "Si usas esta plantilla para página de aterrizaje y la recomiendas en tu Twitter,",
-    "description2": "por favor házmelo saber",
-    "description3": ". Exhibiré tu tweet y recomendación aquí."
+    "title": "Muro de Elogios",
+    "description1": "Utiliza nuestras herramientas y comparte tu experiencia,",
+    "description2": "por favor infórmanos",
+    "description3": ", tu retroalimentación se convertirá en un activo valioso para nosotros."
   },
   "FAQ": {
     "title": "Preguntas Frecuentes",
-    "description": "Aquí están algunas de las preguntas más frecuentes."
+    "description": "Aquí están las preguntas y respuestas que más interesan a nuestros usuarios."
   },
   "CTA": {
-    "title": "Construye tu página de aterrizaje ahora",
-    "description1": "Construye",
-    "description2": "tu página de aterrizaje,",
-    "description3": "muestra",
-    "description4": "tu producto, y",
-    "description5": "comienza a ganar",
-    "description6": "¡dinero!"
+    "title": "Experimenta la Oficina Eficiente Ahora",
+    "description1": "Utiliza",
+    "description2": "nuestra caja de herramientas,",
+    "description3": "optimiza",
+    "description4": "tu flujo de trabajo, y comienza a",
+    "description5": "mejorar la productividad",
+    "description6": "¡"
   },
   "CTAButton": {
-    "title": "Obtener Plantilla"
+    "title": "Comenzar"
   }
 }

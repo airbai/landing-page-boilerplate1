@@ -1,75 +1,65 @@
-
 export const WALL_OF_LOVE = [
   {
     user: {
-      name: "Founder",
-      username: "weijunext",
-      image: "/images/users/weijunext.jpeg",
+      name: "张伟",
+      username: "zhangwei_cn",
+      image: "/images/users/4.png",
     },
     content:
-      "As a front-end developer, I'm highly satisfied with this landing page template. Editing text and images was very intuitive, and I encountered no technical hurdles throughout the process. The template's responsive design is excellent as well; whether on mobile or desktop, the page layout adapts perfectly. I managed to launch my own product's landing page in just half a day, significantly boosting my efficiency.",
+      "As a product manager, I've been impressed with the GPTs tools for streamlining our office workflows. The ease of generating reports and visual data has been particularly beneficial, enhancing our team's productivity and decision-making processes.",
   },
   {
     user: {
-      name: "User1",
-      username: "weijunext",
-      image: "/images/users/1.png",
-    },
-    content:
-      "This template has given me a new perspective on coding. As a backend developer with not much front-end experience, I found this template to be very user-friendly. I could build a professional-looking landing page with hardly any coding required. This not only saved me time but also sparked more interest in front-end development.",
-  },
-  {
-    user: {
-      name: "User2",
-      username: "weijunext",
+      name: "Jean Dupont",
+      username: "jeandupont_fr",
       image: "/images/users/2.png",
     },
     content:
-      "As a developer who transitioned from design, I'm impressed with the aesthetic design of this template. It's not only easy to use but also comes with a default design that feels both modern and professional. I made some adjustments to the details to match my brand style, and the entire process was both simple and enjoyable.",
+      "The GPTs tools have transformed how we approach project management and client presentations. Their intuitive design and powerful features have allowed us to convey complex information in an easily digestible format, making our meetings more effective and productive.",
   },
   {
     user: {
-      name: "User3",
-      username: "weijunext",
+      name: "Olivia Smith",
+      username: "oliviasmith_us",
       image: "/images/users/3.png",
     },
     content:
-      "The performance of this template is outstanding, with very fast loading times and SEO-friendly features. As a developer focused on product optimization, I appreciate the high performance and optimization of the template. With simple modifications, I was able to further optimize my landing page, improving the speed at which users can access it. The SEO friendliness of the template also helped my page achieve better rankings in search engines.",
+      "Utilizing GPTs tools has revolutionized our content creation process. The ability to quickly generate and refine ideas has saved us countless hours, allowing us to focus on delivering higher quality work and meeting tight deadlines with ease.",
   },
   {
     user: {
-      name: "User4",
-      username: "weijunext",
-      image: "/images/users/4.png",
+      name: "محمد الأحمد",
+      username: "mohammad_alahmad_ar",
+      image: "/images/users/1.png",
     },
     content:
-      "The interactive elements of this template added a lot of fun to my project. I particularly liked the settings for animations and transition effects, which made the browsing experience richer and more dynamic. Adjusting these interactive elements was very straightforward, requiring no deep front-end knowledge, which was very user-friendly for a non-professional front-end developer like me.",
+      "As a financial analyst, the accuracy and speed of the GPTs tools have significantly improved our data analysis capabilities. Their advanced algorithms provide precise insights, enabling us to make informed decisions and offer better advice to our clients.",
   },
   {
     user: {
-      name: "User5",
-      username: "weijunext",
+      name: "Carlos Hernández",
+      username: "carloshernandez_es",
       image: "/images/users/5.png",
     },
     content:
-      "This template does a great job with multi-language support, which is crucial for my international project. I was able to easily add different language versions, and the template ensured consistency in layout and design across various languages. This significantly reduced my workload in the localization process and helped me reach global users more quickly.",
+      "In the field of marketing, the GPTs tools have been invaluable in optimizing our campaigns and understanding market trends. The data-driven approach has enhanced our strategic planning and allowed us to achieve superior results in our initiatives.",
   },
   {
     user: {
-      name: "User6",
-      username: "weijunext",
+      name: "Elizabeth Johnson",
+      username: "elizabethjohnson_us",
+      image: "/images/users/3.png",
+    },
+    content:
+      "The GPTs tools' collaborative features have enhanced our team's remote working capabilities. The seamless integration with our existing systems and the ability to co-create and share content in real-time have fostered a more dynamic and interactive work environment.",
+  },
+  {
+    user: {
+      name: "王芳",
+      username: "wangfang_cn",
       image: "/images/users/4.png",
     },
     content:
-      "The interactive elements of this template added a lot of fun to my project. I particularly liked the settings for animations and transition effects, which made the browsing experience richer and more dynamic. Adjusting these interactive elements was very straightforward, requiring no deep front-end knowledge, which was very user-friendly for a non-professional front-end developer like me.",
-  },
-  {
-    user: {
-      name: "User7",
-      username: "weijunext",
-      image: "/images/users/5.png",
-    },
-    content:
-      "This template does a great job with multi-language support, which is crucial for my international project. I was able to easily add different language versions, and the template ensured consistency in layout and design across various languages. This significantly reduced my workload in the localization process and helped me reach global users more quickly.",
+      "In our software development projects, the GPTs tools have been crucial in automating routine tasks and optimizing code generation. Their adaptability and efficiency have not only sped up our development cycles but also improved the overall quality of our applications.",
   },
 ];

@@ -36,19 +36,19 @@ const Header = () => {
         <div className="flex items-center md:gap-x-12">
           <Link
             href="/"
-            aria-label="Landing Page Boilerplate"
-            title="Landing Page Boilerplate"
+            aria-label="{siteConfig.name}"
+            title="{siteConfig.name}"
             className="flex items-center space-x-1 font-bold"
           >
             <Image
               alt={siteConfig.name}
-              src="/logo.svg"
+              src="/logo.png"
               className="w-8 h-8"
               width={32}
               height={32}
             />
             <span className="text-gray-950 dark:text-gray-300 hidden md:block">
-              Landing Page Boilerplate
+            {siteConfig.name}
             </span>
           </Link>
         </div>
@@ -96,7 +96,7 @@ const Header = () => {
                     >
                       <Image
                         alt={siteConfig.name}
-                        src="/logo.svg"
+                        src="/logo.png"
                         className="w-8 h-8"
                         width={32}
                         height={32}

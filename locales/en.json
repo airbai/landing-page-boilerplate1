@@ -1,43 +1,43 @@
 {
   "Hero": {
-    "title1": "Ship",
-    "title2": "Landing Page",
-    "title3": "Fast",
-    "description": "A free, open-source, and powerful landing page boilerplate, ideal for various projects, enabling you to create a landing page in under an hour."
+    "title1": "One-Click Unlock",
+    "title2": "GPTs",
+    "title3": "Toolbox",
+    "description": "A simple, powerful GPTs collection that helps you quickly draw mind maps, flowcharts, treemaps, PPTs, etc., boosting work efficiency, with complex tasks completed in just minutes."
   },
   "SocialProof": {
-    "maker": "makers ship fast"
+    "maker": "The choice of tens of thousands of users worldwide"
   },
   "Feature": {
-    "title": "Features"
+    "title": "Feature Overview"
   },
   "Pricing": {
-    "title": "Pricing",
-    "title2": "Get unlimited access.",
-    "description": "The page you are currently viewing is an open-source, free boilerplate.",
-    "doYouLike": "Do you like this landing page boilerplate?",
-    "follow": "Follow my Twitter."
+    "title": "Pricing Plans",
+    "title2": "Unlock All Features",
+    "description": "Use the GPTs office toolbox to efficiently complete various work tasks.",
+    "doYouLike": "Are you satisfied with our office toolbox?",
+    "follow": "Follow us for more updates."
   },
   "WallOfLove": {
-    "title": "Wall of Love",
-    "description1": "If you use this landing page template and recommend it on your Twitter,",
-    "description2": "please let me know",
-    "description3": ". I will display your tweet and recommendation here."
+    "title": "Wall of Praise",
+    "description1": "Use our tools and share your experience,",
+    "description2": "please let us know",
+    "description3": ", your feedback will become a valuable asset for us to showcase."
   },
   "FAQ": {
-    "title": "FAQs",
-    "description": "Here are some of the most frequently asked questions."
+    "title": "Frequently Asked Questions",
+    "description": "Here are the most concerned questions and answers from our users."
   },
   "CTA": {
-    "title": "Build Your Landing Page Now",
-    "description1": "Build",
-    "description2": "your landing page,",
-    "description3": "show",
-    "description4": "your product, and",
-    "description5": "start earning",
+    "title": "Experience Efficient Office Now",
+    "description1": "Utilize",
+    "description2": "our toolbox,",
+    "description3": "optimize",
+    "description4": "your workflow, and start",
+    "description5": "improving productivity",
     "description6": "!"
   },
   "CTAButton": {
-    "title": "Get Boilerplate"
+    "title": "Get Started"
   }
 }

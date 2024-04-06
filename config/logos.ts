@@ -1,35 +1,35 @@
 
 export const LOGOS = [
   {
-    name: "Next.js",
-    image: "/images/techStack/nextjs.svg",
+    name: "Timeline",
+    image: "/images/techStack/timeline.png",
   },
   {
-    name: "React",
-    image: "/images/techStack/react.svg",
+    name: "Girlfriend",
+    image: "/images/techStack/girlfriend.png",
   },
   {
-    name: "Tailwind",
-    image: "/images/techStack/tailwind.svg",
+    name: "Diagram",
+    image: "/images/techStack/diagram.png",
   },
   {
-    name: "Framer",
-    image: "/images/techStack/framer.svg",
+    name: "MBTI",
+    image: "/images/techStack/mbtiCal.png",
   },
   {
-    name: "Shadcnui",
-    image: "/images/techStack/shadcnui.svg",
+    name: "Mindmap",
+    image: "/images/techStack/mindmap.png",
   },
   {
-    name: "Nextui",
-    image: "/images/techStack/nextui.svg",
+    name: "novelcharacter",
+    image: "/images/techStack/novelcharacter.png",
   },
   {
-    name: "TS",
-    image: "/images/techStack/typescript.svg",
+    name: "Maybe.",
+    image: "/images/techStack/maybe.png",
   },
   {
-    name: "Vercel",
-    image: "/images/techStack/vercel.svg",
+    name: "Flowchart",
+    image: "/images/techStack/flowchart.png",
   },
 ];

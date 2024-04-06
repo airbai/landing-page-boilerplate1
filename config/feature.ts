@@ -1,212 +1,202 @@
-import { LucideIcon, MagnetIcon } from "lucide-react";
-import { IconType } from "react-icons";
-import { BsGithub } from "react-icons/bs";
-import { FaToolbox } from "react-icons/fa";
-import { FaEarthAsia, FaMobileScreenButton } from "react-icons/fa6";
-import { MdCloudUpload } from "react-icons/md";
-
 export const FEATURES_EN = [
   {
-    title: "Open Source Advantage",
-    content: "Completely free with a wealth of customization options.",
-    icon: BsGithub,
+    title: "Powered by GPT-4",
+    content: "Leverage the latest AI technology to enhance your office productivity with advanced GPT-4 tools.",
+    icon: "/images/features/gpt4.png",
   },
   {
-    title: "Responsive Design",
-    content:
-      "Templates meticulously designed to ensure optimal display on any device.",
-    icon: FaMobileScreenButton,
+    title: "No Coding Required",
+    content: "Easily create, edit, and manage content with an intuitive interface, no programming knowledge needed.",
+    icon: "/images/features/nocoding.png",
   },
   {
-    title: "Easy Customization",
-    content:
-      "Effortlessly change colors, fonts, and layouts without any coding knowledge.",
-    icon: FaToolbox,
+    title: "Prompt-Friendly",
+    content: "Efficiently generate accurate outputs with user-friendly prompts, making complex tasks simpler.",
+    icon: "/images/features/promptfriendly.png",
   },
   {
-    title: "SEO Optimized",
-    content:
-      "Templates built with search engine optimization in mind to enhance your website's discoverability.",
-    icon: MagnetIcon,
+    title: "Office Software Compatibility",
+    content: "Seamlessly integrate with popular office software, enhancing workflow and data synchronization.",
+    icon: "/images/features/officecompatibility.png",
   },
   {
-    title: "One-Click Deployment",
-    content:
-      "Tightly integrated with leading web hosting services for instant website publishing.",
-    icon: MdCloudUpload,
+    title: "Multi-Language Support",
+    content: "Break language barriers and engage a global audience with multi-language capabilities.",
+    icon: "/images/features/multilan.png",
   },
   {
-    title: "Globalization Support",
-    content:
-      "Supports multiple languages, making your website attractive to a global audience.",
-    icon: FaEarthAsia,
+    title: "One-Click Unlock for Multiple GPTs Toolkits",
+    content: "Access a suite of powerful GPTs tools with just one click, unlocking efficiency and creativity.",
+    icon: "/images/features/oneclick.png",
   },
 ];
 
 export const FEATURES_ZH = [
   {
-    title: "开源优势",
-    content: "完全免费，提供丰富的自定义选项。",
-    icon: BsGithub,
+    title: "基于 GPT-4",
+    content: "利用最新的 AI 技术，通过先进的 GPT-4 工具提升办公效率。",
+    icon: "/images/features/gpt4.png",
   },
   {
-    title: "响应式设计",
-    content: "精心设计的模板，确保在任何设备上都能优化显示。",
-    icon: FaMobileScreenButton,
+    title: "无需编程",
+    content: "通过直观的界面轻松创建、编辑和管理内容，无需编程知识。",
+    icon: "/images/features/nocoding.png",
   },
   {
-    title: "易于定制",
-    content: "轻松更改颜色、字体和布局，无需任何编码知识。",
-    icon: FaToolbox,
+    title: "提示词友好",
+    content: "使用用户友好的提示词高效生成准确的输出，使复杂任务变得简单。",
+    icon: "/images/features/promptfriendly.png",
   },
   {
-    title: "SEO优化",
-    content: "构建模板时考虑到搜索引擎优化，增强网站的可发现性。",
-    icon: MagnetIcon,
+    title: "办公软件兼容性",
+    content: "与流行的办公软件无缝集成，增强工作流程和数据同步。",
+    icon: "/images/features/officecompatibility.png",
   },
   {
-    title: "一键部署",
-    content: "与领先的网站托管服务紧密集成，实现即时网站发布。",
-    icon: MdCloudUpload,
+    title: "多语言支持",
+    content: "打破语言障碍，通过多语言功能吸引全球受众。",
+    icon: "/images/features/multilan.png",
   },
   {
-    title: "全球化支持",
-    content: "支持多种语言，让你的网站吸引全球受众。",
-    icon: FaEarthAsia,
+    title: "一键解锁多个 GPTs 工具箱",
+    content: "一键访问强大的 GPTs 工具套件，释放效率和创造力。",
+    icon: "/images/features/oneclick.png",
   },
 ];
 
 export const FEATURES_JA = [
   {
-    title: "オープンソースの利点",
-    content: "完全無料で、豊富なカスタマイズオプションを提供。",
-    icon: BsGithub,
+    title: "GPT-4で強化",
+    content: "最新のAI技術を活用して、先進的なGPT-4ツールでオフィスの生産性を向上させます。",
+    icon: "/images/features/gpt4.png",
   },
   {
-    title: "レスポンシブデザイン",
-    content: "どのデバイス上でも最適に表示されるように細心のデザインを施したテンプレート。",
-    icon: FaMobileScreenButton,
+    title: "コーディング不要",
+    content: "直感的なインターフェイスで簡単にコンテンツを作成、編集、管理できます。プログラミングの知識は不要です。",
+    icon: "/images/features/nocoding.png",
   },
   {
-    title: "簡単カスタマイズ",
-    content: "色、フォント、レイアウトをコーディング知識なしで簡単に変更可能。",
-    icon: FaToolbox,
+    title: "プロンプトフレンドリー",
+    content: "ユーザーフレンドリーなプロンプトで効率的に正確な出力を生成し、複雑なタスクを簡素化します。",
+    icon: "/images/features/promptfriendly.png",
   },
   {
-    title: "SEO最適化",
-    content: "ウェブサイトの発見可能性を高めるために、検索エンジン最適化を念頭に置いて構築されたテンプレート。",
-    icon: MagnetIcon,
+    title: "オフィスソフトウェア互換性",
+    content: "人気のオフィスソフトウェアとシームレスに統合し、ワークフローとデータの同期を強化します。",
+    icon: "/images/features/officecompatibility.png",
   },
   {
-    title: "ワンクリックデプロイメント",
-    content: "主要なウェブホスティングサービスと密接に統合し、即時にウェブサイトを公開。",
-    icon: MdCloudUpload,
+    title: "多言語対応",
+    content: "言語の障壁を破り、多言語機能でグローバルなオーディエンスを魅了します。",
+    icon: "/images/features/multilan.png",
   },
   {
-    title: "グローバリゼーションサポート",
-    content: "複数言語をサポートし、グローバルな視聴者を魅了するウェブサイト。",
-    icon: FaEarthAsia,
+    title: "ワンクリックで複数のGPTsツールキットのロックを解除",
+    content: "ワンクリックで強力なGPTsツールのスイートにアクセスし、効率と創造性を解き放ちます。",
+    icon: "/images/features/oneclick.png",
   },
 ];
 
 export const FEATURES_AR = [
   {
-    title: "ميزة المصدر المفتوح",
-    content: "مجانية بالكامل مع ثروة من خيارات التخصيص.",
-    icon: BsGithub,
+    title: "مدعوم بـ GPT-4",
+    content: "استفد من أحدث تقنيات الذكاء الاصطناعي لزيادة إنتاجية المكتب باستخدام أدوات GPT-4 المتقدمة.",
+    icon: "/images/features/gpt4.png",
   },
   {
-    title: "تصميم متجاوب",
-    content: "تم تصميم القوالب بعناية لضمان عرض مثالي على أي جهاز.",
-    icon: FaMobileScreenButton,
+    title: "لا حاجة للتكويد",
+    content: "يمكنك بسهولة إنشاء وتعديل وإدارة المحتوى باستخدام واجهة بديهية، دون الحاجة إلى معرفة بالبرمجة.",
+    icon: "/images/features/nocoding.png",
   },
   {
-    title: "تخصيص سهل",
-    content: "غير الألوان والخطوط والتخطيطات بسهولة دون الحاجة إلى معرفة بالبرمجة.",
-    icon: FaToolbox,
+    title: "سهولة الاستخدام مع الأوامر",
+    content: "قم بتوليد المخرجات بدقة وفعالية باستخدام أوامر سهلة الاستخدام، مما يبسط المهام المعقدة.",
+    icon: "/images/features/promptfriendly.png",
   },
   {
-    title: "مُحسّن لمحركات البحث",
-    content: "تم بناء القوالب مع مراعاة تحسين محركات البحث لتعزيز قابلية اكتشاف موقعك.",
-    icon: MagnetIcon,
+    title: "توافق مع برمجيات المكتب",
+    content: "دمج سلس مع برمجيات المكتب الشهيرة، مما يعزز تدفق العمل ومزامنة البيانات.",
+    icon: "/images/features/officecompatibility.png",
   },
   {
-    title: "نشر بنقرة واحدة",
-    content: "متكاملة بشكل وثيق مع خدمات استضافة الويب الرائدة لنشر الموقع فوراً.",
-    icon: MdCloudUpload,
+    title: "دعم متعدد اللغات",
+    content: "تجاوز الحواجز اللغوية وجذب جمهور عالمي مع دعم متعدد اللغات.",
+    icon: "/images/features/multilan.png",
   },
   {
-    title: "دعم العولمة",
-    content: "يدعم لغات متعددة، مما يجعل موقعك جذابًا لجمهور عالمي.",
-    icon: FaEarthAsia,
+    title: "فتح بنقرة واحدة لعدة مجموعات أدوات GPTs",
+    content: "وصول إلى مجموعة من أدوات GPTs القوية بنقرة واحدة، مما يطلق العنان للكفاءة والإبداع.",
+    icon: "/images/features/oneclick.png",
   },
 ];
 
 export const FEATURES_ES = [
   {
-    title: "Ventaja del Código Abierto",
-    content: "Completamente gratuito con una riqueza de opciones de personalización.",
-    icon: BsGithub,
+    title: "Potenciado por GPT-4",
+    content: "Aprovecha la última tecnología de IA para mejorar tu productividad de oficina con herramientas avanzadas de GPT-4.",
+    icon: "/images/features/gpt4.png",
   },
   {
-    title: "Diseño Responsivo",
-    content: "Plantillas diseñadas meticulosamente para garantizar una visualización óptima en cualquier dispositivo.",
-    icon: FaMobileScreenButton,
+    title: "No se requiere codificación",
+    content: "Crea, edita y gestiona contenido fácilmente con una interfaz intuitiva, sin necesidad de conocimientos de programación.",
+    icon: "/images/features/nocoding.png",
   },
   {
-    title: "Personalización Fácil",
-    content: "Cambia colores, fuentes y diseños sin esfuerzo y sin necesidad de conocimientos de codificación.",
-    icon: FaToolbox,
+    title: "Amigable con comandos",
+    content: "Genera salidas precisas de manera eficiente con comandos amigables, simplificando tareas complejas.",
+    icon: "/images/features/promptfriendly.png",
   },
   {
-    title: "Optimizado para SEO",
-    content: "Plantillas construidas con la optimización de motores de búsqueda en mente para mejorar la descubribilidad de tu sitio web.",
-    icon: MagnetIcon,
+    title: "Compatibilidad con software de oficina",
+    content: "Integración perfecta con software de oficina popular, mejorando el flujo de trabajo y la sincronización de datos.",
+    icon: "/images/features/officecompatibility.png",
   },
   {
-    title: "Despliegue con Un Clic",
-    content: "Integrado estrechamente con servicios líderes de alojamiento web para la publicación instantánea del sitio web.",
-    icon: MdCloudUpload,
+    title: "Soporte multilingüe",
+    content: "Rompe las barreras del idioma y atrae a una audiencia global con capacidades multilingües.",
+    icon: "/images/features/multilan.png",
   },
   {
-    title: "Soporte de Globalización",
-    content: "Soporta múltiples idiomas, haciendo tu sitio web atractivo para una audiencia global.",
-    icon: FaEarthAsia,
+    title: "Desbloqueo con un clic de múltiples kits de herramientas GPTs",
+    content: "Accede a un conjunto de herramientas GPTs potentes con solo un clic, liberando eficiencia y creatividad.",
+    icon: "/images/features/oneclick.png",
   },
 ];
 
 export const FEATURES_RU = [
   {
-    title: "Преимущество Открытого Исходного Кода",
-    content: "Полностью бесплатно с широкими возможностями настройки.",
-    icon: BsGithub,
+    title: "На базе GPT-4",
+    content: "Используйте последние достижения ИИ для повышения производительности работы с помощью передовых инструментов GPT-4.",
+    icon: "/images/features/gpt4.png",
   },
   {
-    title: "Адаптивный Дизайн",
-    content: "Шаблоны, тщательно разработанные для обеспечения оптимального отображения на любом устройстве.",
-    icon: FaMobileScreenButton,
+    title: "Кодирование Не Требуется",
+    content: "Легко создавайте, редактируйте и управляйте контентом с помощью интуитивно понятного интерфейса, без необходимости в знаниях программирования.",
+    icon: "/images/features/nocoding.png",
   },
   {
-    title: "Легкая Настройка",
-    content: "Легко изменяйте цвета, шрифты и макеты без знаний в области программирования.",
-    icon: FaToolbox,
+    title: "Дружелюбие к Подсказкам",
+    content: "Эффективно генерируйте точные результаты с помощью дружелюбных подсказок, упрощая сложные задачи.",
+    icon: "/images/features/promptfriendly.png",
   },
   {
-    title: "Оптимизировано для Поисковых Систем",
-    content: "Шаблоны созданы с учетом оптимизации для поисковых систем, чтобы повысить обнаруживаемость вашего сайта.",
-    icon: MagnetIcon,
+    title: "Совместимость с Офисным ПО",
+    content: "Бесперебойная интеграция с популярным офисным программным обеспечением, улучшающая рабочие процессы и синхронизацию данных.",
+    icon: "/images/features/officecompatibility.png",
   },
   {
-    title: "Развертывание в Один Клик",
-    content: "Плотно интегрировано с ведущими сервисами веб-хостинга для мгновенной публикации сайта.",
-    icon: MdCloudUpload,
+    title: "Поддержка Многоязычности",
+    content: "Преодолевайте языковые барьеры и привлекайте глобальную аудиторию с помощью многоязычной поддержки.",
+    icon: "/images/features/multilan.png",
   },
   {
-    title: "Поддержка Глобализации",
-    content: "Поддерживает несколько языков, делая ваш сайт привлекательным для мировой аудитории.",
-    icon: FaEarthAsia,
+    title: "Разблокировка Наборов Инструментов GPTs Одним Кликом",
+    content: "Получите доступ к набору мощных инструментов GPTs одним кликом, раскрывая эффективность и креативность.",
+    icon: "/images/features/oneclick.png",
   },
 ];
+
+
 
 interface FeaturesCollection {
   [key: `FEATURES_${string}`]: {
