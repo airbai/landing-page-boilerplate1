@@ -1,43 +1,43 @@
 {
   "Hero": {
-    "title1": "快速构建",
-    "title2": "落地页",
-    "title3": "",
-    "description": "一个免费、开源且强大的落地页模板，适用于各种项目，让你在一个小时内搭建落地页。"
+    "title1": "轻松打造",
+    "title2": "GPT",
+    "title3": "工具箱",
+    "description": "免费、易用的 GPT 工具集，助您快速绘制脑图、流程图、矩形树图、PPT 等，提升工作效率，仅需数分钟即可完成复杂任务。"
   },
   "SocialProof": {
-    "maker": "制作者快速开发"
+    "maker": "全球上万用户的选择"
   },
   "Feature": {
-    "title": "Feature"
+    "title": "功能一览"
   },
   "Pricing": {
-    "title": "定价",
-    "title2": "拥有无限访问权限",
-    "description": "你当前查看的页面是一个开源的、免费的模板。",
-    "doYouLike": "你喜欢这个落地页模板吗？",
-    "follow": "关注我的推特。"
+    "title": "价格方案",
+    "title2": "解锁全部功能",
+    "description": "免费体验 GPT 办公工具集，高效完成各类工作任务。",
+    "doYouLike": "是否满意我们的办公工具集？",
+    "follow": "关注我们获取更多更新。"
   },
   "WallOfLove": {
-    "title": "Wall of Love",
-    "description1": "如果你使用这个落地页模板并在推特上推荐了，",
-    "description2": "请告诉我",
-    "description3": "，我会在这里展示你的推文和推荐。"
+    "title": "用户赞誉墙",
+    "description1": "使用我们的工具并分享您的体验，",
+    "description2": "请告知我们",
+    "description3": "，您的反馈将成为我们展示的宝贵资产。"
   },
   "FAQ": {
-    "title": "FAQs",
-    "description": "这里有一些最常见的问题。"
+    "title": "常见问题解答",
+    "description": "这里汇集了用户最关心的问题及解答。"
   },
   "CTA": {
-    "title": "立即构建你的落地页",
-    "description1": "构建",
-    "description2": "你的落地页，",
-    "description3": "展示",
-    "description4": "你的产品，并开始",
-    "description5": "赚取收入",
+    "title": "立即体验高效办公",
+    "description1": "使用",
+    "description2": "我们的工具集，",
+    "description3": "优化",
+    "description4": "您的工作流程，并开始",
+    "description5": "提高生产力",
     "description6": "！"
   },
   "CTAButton": {
-    "title": "获取模板"
+    "title": "开始使用"
   }
 }
