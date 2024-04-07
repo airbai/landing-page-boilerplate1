@@ -7,8 +7,10 @@
   },
   "SocialProof": {
     "maker": "全球上万用户的选择"
+    "maker": "全球上万用户的选择"
   },
   "Feature": {
+    "title": "功能一览"
     "title": "功能一览"
   },
   "Pricing": {
@@ -23,8 +25,14 @@
     "description1": "使用我们的工具并分享您的体验，",
     "description2": "请告知我们",
     "description3": "，您的反馈将成为我们展示的宝贵资产。"
+    "title": "用户赞誉墙",
+    "description1": "使用我们的工具并分享您的体验，",
+    "description2": "请告知我们",
+    "description3": "，您的反馈将成为我们展示的宝贵资产。"
   },
   "FAQ": {
+    "title": "常见问题解答",
+    "description": "这里汇集了用户最关心的问题及解答。"
     "title": "常见问题解答",
     "description": "这里汇集了用户最关心的问题及解答。"
   },
