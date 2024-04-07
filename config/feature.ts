@@ -1,3 +1,6 @@
+import { LucideIcon } from "lucide-react";
+import { IconType } from "react-icons";
+
 export const FEATURES_EN = [
   {
     title: "Powered by GPT-4",
