@@ -1,5 +1,3 @@
-import { LucideIcon } from "lucide-react";
-import { IconType } from "react-icons";
 
 export const FEATURES_EN = [
   {
@@ -205,7 +203,7 @@ interface FeaturesCollection {
   [key: `FEATURES_${string}`]: {
     title: string;
     content: string;
-    icon: IconType | LucideIcon;
+    icon: string;
   }[];
 }
 
