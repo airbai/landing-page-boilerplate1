@@ -8,6 +8,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { ThemedButton } from "../ThemedButton";
+import { SignIn } from "../SignIn";
+import Page from "@/app/sign-up/[[...sign-up]]/page";
 
 const links = [
   {

@@ -35,8 +35,8 @@ const baseSiteConfig = {
   },
   headerLinks: [
     { name: 'repo', href: OPEN_SOURCE_URL, icon: BsGithub },
-    { name: 'twitter', href: "https://twitter.com/?TBD", icon: BsTwitterX },
-    { name: 'buyMeCoffee', href: "https://www.buymeacoffee.com/?TBD", icon: SiBuymeacoffee }
+    { name: 'buyMeCoffee', href: "https://www.buymeacoffee.com/?TBD", icon: SiBuymeacoffee },
+    { name: 'Dashboard', href: "/sign-in", icon: BsTwitterX },
   ],
   footerLinks: [
     { name: 'email', href: "mailto:dothingsatonce@gmail.com", icon: MdEmail },

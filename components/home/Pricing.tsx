@@ -15,6 +15,7 @@ import { siteConfig } from "@/config/site";
 import { ALL_TIERS } from "@/config/tiers";
 import { FaCheck } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
+import StripeButton from '@/components/ui/StripeButton';
 
 const Pricing = ({
   id,
@@ -82,6 +83,12 @@ const Pricing = ({
               >
                 {tier.buttonText}
               </Button>
+              <StripeButton
+                buttonText="Pay with Stripe"
+                buttonColor="primary"
+                buttonVariant="contained"
+                priceId="price_1PBDOEP9CNElYosA3FMOXAHe"
+              />
             </CardFooter>
           </Card>
         ))}

@@ -8,6 +8,7 @@ import SocialProof from "@/components/home/SocialProof";
 import WallOfLove from "@/components/home/WallOfLove";
 import { defaultLocale, getDictionary } from "@/lib/i18n";
 
+
 export default async function LangHome({
   params: { lang },
 }: {
@@ -18,6 +19,7 @@ export default async function LangHome({
     lang && lang[0] && lang[0] !== "index" ? lang[0] : defaultLocale;
 
   const dict = await getDictionary(langName);
+
 
   return (
     <>
