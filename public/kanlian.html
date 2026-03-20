@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>颜值美学报告卡片生成器</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      background: linear-gradient(160deg, #FFF2F6 0%, #FFE5EC 60%, #FFDCE5 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 8px 32px rgba(255, 105, 180, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: #FF4D82;
+      margin-bottom: 32px;
+      font-size: 28px;
+    }
+
+    .upload-section {
+      margin-bottom: 24px;
+    }
+
+    .upload-label {
+      display: block;
+      color: #666;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .file-button {
+      display: block;
+      width: 100%;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #FF8FB3 0%, #FF69B4 100%);
+      color: white;
+      border: none;
+      border-radius: 48px;
+      cursor: pointer;
+      font-size: 16px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .file-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3);
+    }
+
+    .score-section {
+      margin-bottom: 24px;
+    }
+
+    .score-input {
+      width: 100%;
+      padding: 12px 24px;
+      border: 2px solid #FFB6C1;
+      border-radius: 48px;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .score-input:focus {
+      border-color: #FF69B4;
+      box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
+    }
+
+    .emoji-section {
+      margin-bottom: 24px;
+    }
+
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .emoji-option {
+      padding: 12px;
+      border: 2px solid #FFE5EC;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+
+    .emoji-option:hover {
+      border-color: #FF69B4;
+      background: #FFF9FB;
+    }
+
+    .emoji-option.selected {
+      border-color: #FF4D82;
+      background: linear-gradient(135deg, #FFD6E8 0%, #FFB3D1 100%);
+    }
+
+    .emoji-option .emoji {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .generate-btn {
+      width: 100%;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #FFB3D1, #FF4D82);
+      color: white;
+      border: none;
+      border-radius: 48px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 16px;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 77, 130, 0.3);
+    }
+
+    .generate-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .preview-section {
+      margin-top: 32px;
+      text-align: center;
+    }
+
+    #previewImg {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(255, 105, 180, 0.2);
+      display: none;
+    }
+
+    canvas {
+      display: none;
+    }
+
+    .download-btn {
+      display: none;
+      width: 100%;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #7B68EE 0%, #9370DB 100%);
+      color: white;
+      border: none;
+      border-radius: 48px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 16px;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(147, 112, 219, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌟 颜值美学报告卡片生成器</h1>
+
+    <div class="upload-section">
+      <label class="upload-label">上传照片</label>
+      <div class="file-input-wrapper">
+        <input type="file" id="imageInput" accept="image/*">
+        <label for="imageInput" class="file-button">选择图片</label>
+      </div>
+    </div>
+
+    <div class="score-section">
+      <label class="upload-label">输入分数（1-10）</label>
+      <input type="number" id="scoreInput" class="score-input" min="1" max="10" step="0.1" placeholder="例如：7.1">
+    </div>
+
+    <div class="emoji-section">
+      <label class="upload-label">选择表情和级别</label>
+      <div class="emoji-grid">
+        <div class="emoji-option" data-emoji="😰" data-text="纯史" data-score="2">
+          <span class="emoji">😰</span>
+          <span>纯史</span>
+        </div>
+        <div class="emoji-option" data-emoji="😠" data-text="真挫丑" data-score="3">
+          <span class="emoji">😠</span>
+          <span>真挫丑</span>
+        </div>
+        <div class="emoji-option" data-emoji="😂" data-text="不好看" data-score="4">
+          <span class="emoji">😂</span>
+          <span>不好看</span>
+        </div>
+        <div class="emoji-option" data-emoji="😅" data-text="正常人" data-score="5">
+          <span class="emoji">😅</span>
+          <span>正常人</span>
+        </div>
+        <div class="emoji-option" data-emoji="😌" data-text="小帅小美" data-score="6">
+          <span class="emoji">😌</span>
+          <span>小帅小美</span>
+        </div>
+        <div class="emoji-option" data-emoji="😉" data-text="班草班花" data-score="7">
+          <span class="emoji">😉</span>
+          <span>班草班花</span>
+        </div>
+        <div class="emoji-option" data-emoji="🤩" data-text="网红级别" data-score="8">
+          <span class="emoji">🤩</span>
+          <span>网红级别</span>
+        </div>
+        <div class="emoji-option" data-emoji="😎" data-text="明星级" data-score="9">
+          <span class="emoji">😎</span>
+          <span>明星级</span>
+        </div>
+        <div class="emoji-option" data-emoji="😍" data-text="绝世神颜" data-score="10">
+          <span class="emoji">😍</span>
+          <span>绝世神颜</span>
+        </div>
+      </div>
+    </div>
+
+    <button id="generateBtn" class="generate-btn">生成卡片</button>
+    <button id="downloadBtn" class="download-btn">下载卡片</button>
+
+    <div class="preview-section">
+      <img id="previewImg" alt="预览">
+    </div>
+  </div>
+
+  <canvas id="canvas" width="750" height="1334"></canvas>
+
+  <script>
+    let uploadedImage = null;
+    let selectedEmoji = '🤩';
+    let selectedText = '网红级别';
+
+    const imageInput = document.getElementById('imageInput');
+    const scoreInput = document.getElementById('scoreInput');
+    const generateBtn = document.getElementById('generateBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const previewImg = document.getElementById('previewImg');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Handle file upload
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            uploadedImage = img;
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Handle emoji selection
+    document.querySelectorAll('.emoji-option').forEach(option => {
+      option.addEventListener('click', () => {
+        document.querySelectorAll('.emoji-option').forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedEmoji = option.dataset.emoji;
+        selectedText = option.dataset.text;
+        
+        // 自动填充分数 (text1 + 1)
+        const autoScore = parseFloat(option.dataset.score);
+        scoreInput.value = autoScore;
+      });
+    });
+
+    // Generate card
+    generateBtn.addEventListener('click', () => {
+      const score = parseFloat(scoreInput.value);
+      
+      if (!uploadedImage) {
+        alert('请先上传图片');
+        return;
+      }
+      
+      if (!score || score < 1 || score > 10) {
+        alert('请输入1-10之间的分数');
+        return;
+      }
+
+      generateCard(score);
+    });
+
+    function generateCard(score) {
+      // Clear canvas
+      ctx.clearRect(0, 0, 750, 1334);
+
+      // 绘制粉色背景
+      ctx.fillStyle = '#FFE9EF';
+      ctx.fillRect(0, 0, 750, 1334);
+
+      // 绘制标题
+      ctx.fillStyle = '#FF4D82';
+      ctx.font = 'bold 36px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('颜值美学报告', 375, 110);
+
+      // 绘制圆角矩形白色卡片区域
+      ctx.fillStyle = '#FFFFFF';
+      roundRect(ctx, 50, 150, 650, 1000, 48);
+
+      // 提取数据 - 显示原始分数减1
+      const displayScore = (score).toFixed(1);
+
+      // 创建渐变色
+      const gradient = ctx.createLinearGradient(150, 250, 600, 250);
+      gradient.addColorStop(0, '#FF4D82');
+      gradient.addColorStop(1, '#FF709F');
+
+      // 垂直居中对齐的Y位置
+      const scoreLineY = 280;
+
+      // 绘制分数部分
+      ctx.fillStyle = gradient;
+      ctx.font = 'bold 70px sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(displayScore, 260, scoreLineY);
+
+      // 绘制emoji
+      ctx.fillStyle = '#333333';
+      ctx.font = '60px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(selectedEmoji, 325, scoreLineY);
+
+      // 绘制级别文字
+      ctx.fillStyle = gradient;
+      ctx.font = 'bold 60px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(selectedText, 380, scoreLineY);
+
+      // 加载用户头像图片
+      if (uploadedImage) {
+        // 保持原始图片的宽高比
+        const imgMaxWidth = 400;
+        const imgMaxHeight = 400;
+
+        // 计算宽高比
+        const aspectRatio = uploadedImage.width / uploadedImage.height;
+
+        let imgWidth, imgHeight;
+        if (aspectRatio >= 1) {
+          // 宽图
+          imgWidth = imgMaxWidth;
+          imgHeight = imgWidth / aspectRatio;
+        } else {
+          // 高图
+          imgHeight = imgMaxHeight;
+          imgWidth = imgHeight * aspectRatio;
+        }
+
+        // 计算居中位置
+        const imgX = (750 - imgWidth) / 2;
+        const imgY = 350 + (imgMaxHeight - imgHeight) / 2; // 垂直居中
+
+        // 绘制头像
+        ctx.drawImage(uploadedImage, imgX, imgY, imgWidth, imgHeight);
+      }
+
+      // 加载并绘制小程序码
+      const qrCodeUrl = 'https://www.youxiaojia.cn/images/avatars/xcx/face/images/erzong.jpg';
+      const qrImage = new Image();
+      qrImage.crossOrigin = 'anonymous';
+      
+      qrImage.onload = () => {
+        // 绘制小程序码(居中放置)
+        const qrSize = 200;
+        const qrY = 760; // 位置调整，使元素更均匀分布
+        ctx.drawImage(qrImage, (750 - qrSize) / 2, qrY, qrSize, qrSize);
+
+        // 添加提示文字
+        ctx.fillStyle = '#999999';
+        ctx.font = '26px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('长按识别小程序码，查看你的颜值评分', 375, qrY + qrSize + 50);
+
+        // 添加版权信息
+        ctx.fillText('1分到10分 © 看脸助手', 375, qrY + qrSize + 90);
+
+        // Show preview
+        previewImg.src = canvas.toDataURL('image/png');
+        previewImg.style.display = 'block';
+        downloadBtn.style.display = 'block';
+      };
+
+      qrImage.onerror = () => {
+        // 小程序码加载失败时的处理
+        console.error('小程序码加载失败');
+        // 即使失败也显示卡片
+        previewImg.src = canvas.toDataURL('image/png');
+        previewImg.style.display = 'block';
+        downloadBtn.style.display = 'block';
+      };
+
+      // 设置小程序码图片源
+      qrImage.src = qrCodeUrl;
+    }
+
+    // 绘制圆角矩形方法
+    function roundRect(ctx, x, y, w, h, r) {
+      if (w < 2 * r) r = w / 2;
+      if (h < 2 * r) r = h / 2;
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // Download card
+    downloadBtn.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = '颜值美学报告.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  </script>
+</body>
+</html>
