@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小水滴旅行 · 中班科学</title>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  font-family: 'ZCOOL KuaiLe', 'Microsoft YaHei', '微软雅黑', sans-serif;
+  background: #0d2a4e;
+  user-select: none;
+}
+
+#scene {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  cursor: grab;
+}
+#scene:active { cursor: grabbing; }
+
+/* ── TITLE ── */
+#title {
+  position: absolute;
+  top: 22px; left: 50%;
+  transform: translateX(-50%);
+  text-align: center; z-index: 20;
+  pointer-events: none;
+}
+#title h1 {
+  font-size: clamp(1.8em, 4vw, 3.2em);
+  color: #fff;
+  text-shadow:
+    0 0 40px rgba(100,210,255,0.9),
+    0 0 80px rgba(60,160,220,0.5),
+    0 3px 12px rgba(0,0,0,0.6);
+  letter-spacing: 10px;
+}
+#title p {
+  font-size: clamp(0.85em, 1.5vw, 1.1em);
+  color: rgba(200,240,255,0.75);
+  letter-spacing: 5px; margin-top: 4px;
+}
+
+/* ── JOURNEY STAGE CARD ── */
+#stage-card {
+  position: absolute;
+  left: 36px; top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  background: rgba(5,30,60,0.55);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(100,200,255,0.25);
+  border-radius: 22px;
+  padding: 22px 26px;
+  color: #fff;
+  max-width: 240px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+#stage-card h3 {
+  font-size: 1.2em; color: #4ECDC4;
+  margin-bottom: 14px; letter-spacing: 2px;
+}
+.stage-item {
+  display: flex; align-items: center;
+  gap: 10px; padding: 6px 0;
+  font-size: 1em; color: rgba(200,240,255,0.6);
+  transition: all 0.4s;
+  border-left: 3px solid transparent;
+  padding-left: 10px;
+}
+.stage-item.active {
+  color: #FFD700;
+  border-left-color: #FFD700;
+  text-shadow: 0 0 12px rgba(255,215,0,0.6);
+}
+#stage-card .arrow {
+  color: rgba(78,205,196,0.4);
+  font-size: 0.8em; padding-left: 13px;
+}
+
+/* ── DROP CHARACTER ── */
+#drop-char {
+  position: absolute; z-index: 25;
+  font-size: clamp(36px, 5vw, 56px);
+  filter: drop-shadow(0 0 14px rgba(78,205,196,0.9));
+  transition: left 1.8s cubic-bezier(.25,.8,.25,1),
+              top 1.8s cubic-bezier(.25,.8,.25,1);
+  animation: idle 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes idle {
+  0%,100% { transform: translateY(0) rotate(-5deg) scale(1); }
+  50%      { transform: translateY(-12px) rotate(5deg) scale(1.1); }
+}
+#drop-char.talking {
+  animation: bounce 0.35s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.25) translateY(-6px); }
+}
+
+/* ── DIALOGUE ── */
+#dialogue {
+  position: absolute;
+  right: 38px; bottom: 110px;
+  max-width: clamp(280px, 28vw, 420px);
+  z-index: 20;
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; } }
+.bubble-user {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 18px 18px 4px 18px;
+  padding: 11px 18px;
+  margin-bottom: 12px;
+  color: rgba(230,248,255,0.9);
+  font-size: clamp(0.95em,1.5vw,1.15em);
+  line-height: 1.6;
+}
+.bubble-ai {
+  background: linear-gradient(135deg, rgba(0,80,120,0.55), rgba(0,40,80,0.55));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(78,205,196,0.5);
+  border-radius: 18px 18px 18px 4px;
+  padding: 13px 18px;
+  color: #D0F4F1;
+  font-size: clamp(1em,1.6vw,1.25em);
+  line-height: 1.7;
+  box-shadow: 0 0 20px rgba(78,205,196,0.15);
+}
+.bubble-ai-label {
+  font-size: 0.82em; color: #4ECDC4;
+  margin-bottom: 6px; letter-spacing: 1px;
+}
+.dots { display:inline-flex; gap:5px; }
+.dots span {
+  width:7px; height:7px; border-radius:50%;
+  background:#4ECDC4;
+  animation: dot 1s ease-in-out infinite;
+}
+.dots span:nth-child(2) { animation-delay:.2s; }
+.dots span:nth-child(3) { animation-delay:.4s; }
+@keyframes dot {
+  0%,100% { opacity:.2; transform:scale(1); }
+  50%      { opacity:1; transform:scale(1.5); }
+}
+
+/* ── MIC BUTTON ── */
+#voice-area {
+  position: absolute;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px; z-index: 20;
+}
+#mic-btn {
+  width: clamp(60px,8vw,82px);
+  height: clamp(60px,8vw,82px);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c9b1, #0077aa);
+  border: 3px solid rgba(255,255,255,0.5);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(22px,3.5vw,32px);
+  box-shadow: 0 0 28px rgba(0,200,180,0.5), 0 4px 16px rgba(0,0,0,0.4);
+  animation: floatBtn 3.5s ease-in-out infinite;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+@keyframes floatBtn {
+  0%,100% { transform:translateY(0); }
+  50%      { transform:translateY(-8px); }
+}
+#mic-btn:hover { transform:scale(1.08) translateY(0); }
+#mic-btn.listening {
+  background: linear-gradient(135deg, #FF6B6B, #cc2200);
+  box-shadow: 0 0 40px rgba(255,80,80,0.9), 0 4px 16px rgba(0,0,0,0.4);
+  animation: pulseMic 0.7s ease-in-out infinite;
+}
+@keyframes pulseMic {
+  0%,100% { box-shadow:0 0 25px rgba(255,80,80,0.7); }
+  50%      { box-shadow:0 0 60px rgba(255,80,80,1); }
+}
+#voice-hint {
+  font-size: clamp(0.85em,1.4vw,1.05em);
+  color: rgba(190,235,255,0.8);
+  letter-spacing: 2px;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+}
+
+/* ── DRAG HINT ── */
+#drag-hint {
+  position: absolute;
+  bottom: 28px; right: 40px;
+  z-index: 20;
+  font-size: 0.85em;
+  color: rgba(150,210,255,0.5);
+  letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+
+<div id="title">
+  <h1>💧 小水滴旅行 💧</h1>
+  <p>中班科学探索活动 · 拖拽全景探索水循环</p>
+</div>
+
+<div id="stage-card">
+  <h3>🌊 旅行日记</h3>
+  <div class="stage-item" data-stage="0">☀️ 被太阳晒暖蒸发</div>
+  <div class="arrow">↓</div>
+  <div class="stage-item" data-stage="1">🌬️ 变成水蒸气飘起</div>
+  <div class="arrow">↓</div>
+  <div class="stage-item" data-stage="2">☁️ 遇冷凝结成云朵</div>
+  <div class="arrow">↓</div>
+  <div class="stage-item" data-stage="3">🌧️ 变成雨滴降落</div>
+  <div class="arrow">↓</div>
+  <div class="stage-item" data-stage="4">🏞️ 汇入小河回大海</div>
+</div>
+
+<div id="drop-char">💧</div>
+
+<div id="dialogue">
+  <div class="bubble-user" id="user-text"></div>
+  <div class="bubble-ai">
+    <div class="bubble-ai-label">💧 小水滴说：</div>
+    <div id="ai-text"></div>
+  </div>
+</div>
+
+<div id="voice-area">
+  <button id="mic-btn" title="点击说话">🎤</button>
+  <div id="voice-hint">点击麦克风，和小水滴说话 ✨</div>
+</div>
+
+<div id="drag-hint">← 拖动探索全景 →</div>
+
+<script>
+/* ============================================================
+   CANVAS PANORAMIC SCENE  (world width = 3200px)
+   Sections: [LEFT] River→Forest | Mountains | Clouds | Ocean+Sun [RIGHT]
+   ============================================================ */
+const canvas = document.getElementById('scene');
+const ctx    = canvas.getContext('2d');
+const W_WORLD = 3200;
+let W = 0, H = 0;
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+/* ── PAN STATE ── */
+let panX = 0, panTarget = 0, panVelocity = 0;
+let autoPanDir = 1;
+let isDragging = false, dragStartX = 0, dragStartPan = 0;
+
+canvas.addEventListener('mousedown', e => { isDragging = true; dragStartX = e.clientX; dragStartPan = panX; });
+window.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  panX = Math.max(0, Math.min(W_WORLD - W, dragStartPan - (e.clientX - dragStartX)));
+  panTarget = panX;
+});
+window.addEventListener('mouseup', () => { isDragging = false; });
+canvas.addEventListener('touchstart', e => {
+  isDragging = true; dragStartX = e.touches[0].clientX; dragStartPan = panX;
+}, { passive: true });
+canvas.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+  panX = Math.max(0, Math.min(W_WORLD - W, dragStartPan - (e.touches[0].clientX - dragStartX)));
+  panTarget = panX;
+  e.preventDefault();
+}, { passive: false });
+canvas.addEventListener('touchend', () => { isDragging = false; });
+
+/* ── CLOUDS ── */
+const clouds = [];
+function mkCloud(x) {
+  return {
+    x, y: 60 + Math.random() * 200,
+    r: 55 + Math.random() * 90,
+    speed: 0.15 + Math.random() * 0.35,
+    op: 0.55 + Math.random() * 0.4,
+    dark: x > 400 && x < 1100  // rain clouds over mountains
+  };
+}
+clouds.length = 0;
+for (let i = 0; i < 12; i++) clouds.push(mkCloud(Math.random() * W_WORLD));
+
+function drawCloud(cx, cy, r, op, dark) {
+  ctx.save();
+  ctx.globalAlpha = op;
+  const fill = dark ? 'rgba(160,185,210,0.9)' : 'rgba(255,255,255,0.92)';
+  ctx.fillStyle = fill;
+  ctx.shadowColor = dark ? 'rgba(80,120,180,0.4)' : 'rgba(140,210,255,0.5)';
+  ctx.shadowBlur = 18;
+  const c = (x, y, rd) => { ctx.beginPath(); ctx.arc(x, y, rd, 0, Math.PI*2); ctx.fill(); };
+  c(cx,          cy,          r*.52);
+  c(cx - r*.40,  cy + r*.08,  r*.37);
+  c(cx + r*.40,  cy + r*.08,  r*.37);
+  c(cx - r*.18,  cy - r*.22,  r*.40);
+  c(cx + r*.22,  cy - r*.18,  r*.34);
+  ctx.restore();
+}
+
+/* ── RAIN ── */
+const rain = [];
+for (let i = 0; i < 100; i++) rain.push({
+  x: 300 + Math.random() * 800,
+  y: Math.random() * 700,
+  sp: 7 + Math.random() * 7,
+  len: 10 + Math.random() * 10,
+  op: 0.35 + Math.random() * 0.4
+});
+
+/* ── EVAP PARTICLES ── */
+const evap = [];
+for (let i = 0; i < 35; i++) evap.push({
+  x: 2200 + Math.random() * 700,
+  y: 0, vy: 0, r: 0, op: 0
+});
+function resetEvap(p) {
+  p.x = 2200 + Math.random() * 700;
+  p.y = H * (0.55 + Math.random() * 0.1);
+  p.vy = 0.4 + Math.random() * 0.8;
+  p.r  = 2 + Math.random() * 5;
+  p.op = 0.5 + Math.random() * 0.4;
+}
+evap.forEach(resetEvap);
+
+/* ── WAVES ── */
+let waveTime = 0;
+
+/* ── STARS (night sky dots) ── */
+const stars = [];
+for (let i = 0; i < 60; i++) stars.push({
+  x: Math.random() * W_WORLD, y: 10 + Math.random() * H * 0.25,
+  r: 0.5 + Math.random() * 1.5, t: Math.random() * Math.PI * 2
+});
+
+let t = 0;  // global time counter
+
+/* ============================================================
+   DRAW SCENE
+   ============================================================ */
+function drawScene() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Sky gradient
+  const sky = ctx.createLinearGradient(0, 0, 0, H * .68);
+  sky.addColorStop(0,   '#071d3b');
+  sky.addColorStop(.25, '#0d3464');
+  sky.addColorStop(.6,  '#1c6ba4');
+  sky.addColorStop(1,   '#5ab8d8');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H * .68);
+
+  // Ground belt
+  const gnd = ctx.createLinearGradient(0, H * .68, 0, H);
+  gnd.addColorStop(0,  '#2a6e38');
+  gnd.addColorStop(.5, '#1c5228');
+  gnd.addColorStop(1,  '#0e3318');
+  ctx.fillStyle = gnd; ctx.fillRect(0, H * .68, W, H * .32);
+
+  // ─ BEGIN PAN ─
+  ctx.save();
+  ctx.translate(-panX, 0);
+
+  // Stars
+  ctx.save();
+  stars.forEach(s => {
+    const tw = Math.sin(s.t + t * 0.02) * 0.5 + 0.5;
+    ctx.globalAlpha = tw * 0.6;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
+  });
+  ctx.restore();
+
+  // ── SUN (x≈2550) ──
+  const SX = 2580, SY = H * .16;
+  const pulse = Math.sin(t * .025) * 18;
+  const sunG = ctx.createRadialGradient(SX, SY, 28, SX, SY, 200 + pulse);
+  sunG.addColorStop(0,   'rgba(255,235,80,1)');
+  sunG.addColorStop(.25, 'rgba(255,180,40,.5)');
+  sunG.addColorStop(.7,  'rgba(255,120,0,.15)');
+  sunG.addColorStop(1,   'rgba(255,80,0,0)');
+  ctx.fillStyle = sunG;
+  ctx.beginPath(); ctx.arc(SX, SY, 200 + pulse, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#FFE240';
+  ctx.beginPath(); ctx.arc(SX, SY, 55, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#FFF9A0';
+  ctx.beginPath(); ctx.arc(SX, SY, 38, 0, Math.PI*2); ctx.fill();
+
+  // ── OCEAN (x=1800–3200) ──
+  const OY = H * .55;
+  const ocG = ctx.createLinearGradient(0, OY, 0, H);
+  ocG.addColorStop(0,  '#0077b6'); ocG.addColorStop(.5, '#023e8a'); ocG.addColorStop(1, '#03045e');
+  ctx.fillStyle = ocG;
+  ctx.beginPath(); ctx.moveTo(1800, H);
+  for (let wx = 1800; wx <= 3200; wx += 4) {
+    const wy = OY + Math.sin((wx + waveTime) * .018) * 9 + Math.sin((wx - waveTime * .7) * .031) * 5;
+    ctx.lineTo(wx, wy);
+  }
+  ctx.lineTo(3200, H); ctx.closePath(); ctx.fill();
+
+  // Ocean sparkles
+  ctx.save();
+  for (let s = 0; s < 18; s++) {
+    const sx = 1850 + (s * 73 + waveTime * .8) % 1100;
+    const sy = OY + 12 + Math.sin(sx * .04 + t * .04) * 18;
+    ctx.globalAlpha = (Math.sin(sx * .08 + t * .08) * .5 + .5) * .75;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(sx, sy, 2, 0, Math.PI*2); ctx.fill();
+  }
+  ctx.restore();
+
+  label(2400, OY + 55, '🌊 大海');
+
+  // ── MOUNTAINS (x=200–1100) ──
+  const mtnColor = ['#3e6878', '#335a6a', '#4a7a8c', '#2c5060'];
+  const mtns = [
+    {p:[[100,H*.68],[420,H*.18],[720,H*.68]], c:0},
+    {p:[[380,H*.68],[680,H*.13],[950,H*.68]], c:1},
+    {p:[[700,H*.68],[880,H*.33],[1080,H*.68]], c:2},
+    {p:[[50, H*.68],[230,H*.36],[420,H*.68]], c:3},
+  ];
+  mtns.forEach(m => {
+    ctx.fillStyle = mtnColor[m.c];
+    ctx.beginPath(); ctx.moveTo(...m.p[0]); ctx.lineTo(...m.p[1]); ctx.lineTo(...m.p[2]); ctx.closePath(); ctx.fill();
+  });
+  // Snow caps
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  [[420,H*.18,H*.27],[680,H*.13,H*.23],[880,H*.33,H*.42]].forEach(([px,py,ey]) => {
+    ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px-48,ey); ctx.lineTo(px+48,ey); ctx.closePath(); ctx.fill();
+  });
+  label(580, H*.1, '⛰️ 山脉');
+
+  // ── RIVER (x=650–1800) ──
+  ctx.save();
+  ctx.strokeStyle = '#4ECDC4'; ctx.lineWidth = 20; ctx.lineCap = 'round';
+  ctx.globalAlpha = .65;
+  ctx.shadowColor = '#4ECDC4'; ctx.shadowBlur = 10;
+  ctx.beginPath();
+  ctx.moveTo(680, H*.68);
+  ctx.bezierCurveTo(760, H*.73, 1000, H*.74, 1200, H*.72);
+  ctx.bezierCurveTo(1400, H*.70, 1600, H*.69, 1820, H*.65);
+  ctx.stroke();
+  ctx.restore();
+  label(1180, H*.76, '🏞️ 小河');
+
+  // ── FOREST / TREES ──
+  [80,240,1100,1280,1460,1640].forEach(tx => {
+    ctx.fillStyle = '#4e3020';
+    ctx.fillRect(tx-6, H*.6, 12, 65);
+    ctx.fillStyle = '#236b2f';
+    ctx.beginPath(); ctx.arc(tx, H*.56, 30, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#2e8a3c';
+    ctx.beginPath(); ctx.arc(tx, H*.52, 21, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#3dab4e';
+    ctx.beginPath(); ctx.arc(tx, H*.49, 13, 0, Math.PI*2); ctx.fill();
+  });
+
+  // ── RAIN ──
+  ctx.save();
+  ctx.strokeStyle = 'rgba(150,220,255,0.65)'; ctx.lineWidth = 1.5;
+  rain.forEach(d => {
+    ctx.globalAlpha = d.op;
+    ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x + 2, d.y + d.len); ctx.stroke();
+  });
+  ctx.restore();
+  label(480, H*.32, '🌧️ 降雨');
+
+  // ── EVAPORATION ──
+  evap.forEach(p => {
+    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+    g.addColorStop(0, `rgba(78,205,196,${p.op})`);
+    g.addColorStop(1, 'rgba(78,205,196,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+  });
+  label(2420, H*.43, '♨️ 蒸发上升');
+
+  // ── CLOUDS ──
+  clouds.forEach(c => drawCloud(c.x, c.y, c.r, c.op, c.dark));
+
+  // Cloud zone label
+  label(1500, H*.1, '☁️ 云朵凝结区');
+
+  ctx.restore();
+  // ─ END PAN ─
+}
+
+function label(wx, wy, txt) {
+  ctx.save();
+  ctx.font = `bold ${Math.max(16, W * .018)}px ZCOOL KuaiLe, Microsoft YaHei`;
+  ctx.fillStyle = 'rgba(255,255,255,0.75)';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = 'rgba(0,0,0,0.5)';
+  ctx.shadowBlur = 8;
+  ctx.fillText(txt, wx, wy);
+  ctx.restore();
+}
+
+/* ============================================================
+   PARTICLE UPDATE
+   ============================================================ */
+function updateParticles() {
+  waveTime += 1.2;
+  t++;
+
+  clouds.forEach(c => {
+    c.x += c.speed;
+    if (c.x > W_WORLD + c.r * 3) {
+      c.x = -c.r * 3;
+      c.y = 60 + Math.random() * 200;
+      c.dark = Math.random() < .3;
+    }
+  });
+
+  rain.forEach(d => {
+    d.y += d.sp;
+    if (d.y > H * .73) { d.y = 90 + Math.random() * 220; }
+  });
+
+  evap.forEach(p => {
+    p.y -= p.vy;
+    p.op -= 0.004;
+    if (p.op <= 0 || p.y < H * .18) resetEvap(p);
+  });
+}
+
+/* ============================================================
+   WATER DROP CHARACTER JOURNEY
+   ============================================================ */
+const journey = [
+  { wx: 2400, wy: .52, stage: 0, label: '☀️ 被阳光晒暖，准备蒸发啦！' },
+  { wx: 1900, wy: .30, stage: 1, label: '🌬️ 变成水蒸气，飘飘飘向天空～' },
+  { wx: 1350, wy: .14, stage: 2, label: '❄️ 遇到冷空气，变成小云朵！' },
+  { wx:  520, wy: .38, stage: 3, label: '🌧️ 变成雨滴，落落落下来～' },
+  { wx:  900, wy: .71, stage: 4, label: '🏞️ 汇入小河，流啊流回大海！' },
+];
+
+let jIdx = 0, jTimer = 0;
+const dropEl    = document.getElementById('drop-char');
+const stageDots = document.querySelectorAll('.stage-item');
+
+function updateDrop() {
+  jTimer++;
+  if (jTimer > 240) {
+    jTimer = 0;
+    jIdx = (jIdx + 1) % journey.length;
+    const jp = journey[jIdx];
+    // Auto-pan to center on current drop world position
+    panTarget = Math.max(0, Math.min(W_WORLD - W, jp.wx - W * .5));
+  }
+  const jp = journey[jIdx];
+  const sx = jp.wx - panX;
+  const sy = jp.wy * H;
+  dropEl.style.left = Math.max(60, Math.min(W - 80, sx)) + 'px';
+  dropEl.style.top  = Math.max(60, Math.min(H - 80, sy)) + 'px';
+
+  stageDots.forEach((el, i) => {
+    el.classList.toggle('active', i === jp.stage);
+  });
+
+  // Update stage card info
+  const card = document.getElementById('stage-card');
+  const header = card.querySelector('h3');
+  header.textContent = '💧 ' + jp.label;
+}
+
+function updatePan() {
+  if (!isDragging) {
+    // Gentle auto-pan when idle
+    if (Math.abs(panTarget - panX) < 2) {
+      panTarget += autoPanDir * 0.25;
+      if (panTarget > W_WORLD - W - 20) autoPanDir = -1;
+      if (panTarget < 20) autoPanDir = 1;
+    }
+    panX += (panTarget - panX) * 0.025;
+  }
+  panX = Math.max(0, Math.min(W_WORLD - W, panX));
+}
+
+/* ============================================================
+   VOICE + AI
+   ============================================================ */
+let recognition = null, isSpeaking = false;
+const micBtn   = document.getElementById('mic-btn');
+const dialogue = document.getElementById('dialogue');
+const userText = document.getElementById('user-text');
+const aiText   = document.getElementById('ai-text');
+const vHint    = document.getElementById('voice-hint');
+
+const SRClass = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SRClass) {
+  recognition = new SRClass();
+  recognition.lang = 'zh-CN';
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onresult = async e => {
+    const txt = e.results[0][0].transcript;
+    stopListening();
+    showUser(txt);
+    vHint.textContent = '小水滴正在思考 ✨';
+    await callAI(txt);
+  };
+  recognition.onerror = recognition.onend = () => { stopListening(); };
+}
+
+function stopListening() {
+  micBtn.classList.remove('listening');
+  micBtn.innerHTML = '🎤';
+}
+
+micBtn.addEventListener('click', () => {
+  if (isSpeaking || !recognition) return;
+  micBtn.classList.add('listening');
+  micBtn.innerHTML = '⏺️';
+  vHint.textContent = '正在听～请大声说话！';
+  recognition.start();
+});
+
+function showUser(txt) {
+  userText.textContent = '小朋友问：' + txt;
+  aiText.innerHTML = '<div class="dots"><span></span><span></span><span></span></div>';
+  dialogue.style.display = 'block';
+}
+
+async function callAI(userMsg) {
+  try {
+    const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer sk-c172de1d3419429c9b7cfdd0487a8443'
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        max_tokens: 150,
+        messages: [
+          {
+            role: 'system',
+            content: `你是"小水滴"，一个超级可爱活泼的小水分子，正在带中班小朋友（4-5岁）体验神奇的水循环旅行。用第一人称"我"，语气活泼、温暖、充满童趣。每次回答控制在30字以内。可以加1-2个相关emoji。当前旅行阶段：${journey[jIdx].label}`
+          },
+          { role: 'user', content: userMsg }
+        ]
+      })
+    });
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || '嘻嘻，和我一起旅行吧！💧';
+    aiText.textContent = reply;
+    speak(reply);
+  } catch {
+    const fallback = '哇，小朋友真厉害！我们继续旅行吧～💧';
+    aiText.textContent = fallback;
+    speak(fallback);
+  }
+}
+
+function speak(txt) {
+  isSpeaking = true;
+  dropEl.classList.add('talking');
+  vHint.textContent = '小水滴正在说话～';
+  const synth = window.speechSynthesis;
+  // Cancel any ongoing
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.lang = 'zh-CN'; u.rate = 0.9; u.pitch = 1.35; u.volume = 1;
+  const voices = synth.getVoices();
+  const cv = voices.find(v => v.lang.startsWith('zh'));
+  if (cv) u.voice = cv;
+  u.onend = u.onerror = () => {
+    isSpeaking = false;
+    dropEl.classList.remove('talking');
+    vHint.textContent = '点击麦克风，和小水滴说话 ✨';
+    setTimeout(() => { dialogue.style.display = 'none'; }, 6000);
+  };
+  synth.speak(u);
+}
+
+// Pre-load voices
+speechSynthesis.getVoices();
+speechSynthesis.addEventListener('voiceschanged', () => speechSynthesis.getVoices());
+
+/* ============================================================
+   MAIN LOOP
+   ============================================================ */
+function loop() {
+  updatePan();
+  updateParticles();
+  drawScene();
+  updateDrop();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
