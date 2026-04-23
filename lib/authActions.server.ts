@@ -1,6 +1,7 @@
 "use server";
 
+import { signIn } from "@/auth";
+
 export async function signInWithGoogle() {
-    // Assuming signIn is already implemented in "@/auth"
-    await signIn("google");
+  await signIn("google");
 }

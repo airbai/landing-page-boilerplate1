@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -196,6 +196,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>🌟 颜值美学报告卡片生成器</h1>
@@ -301,7 +302,7 @@
         option.classList.add('selected');
         selectedEmoji = option.dataset.emoji;
         selectedText = option.dataset.text;
-        
+
         // 自动填充分数 (text1 + 1)
         const autoScore = parseFloat(option.dataset.score);
         scoreInput.value = autoScore;
@@ -311,12 +312,12 @@
     // Generate card
     generateBtn.addEventListener('click', () => {
       const score = parseFloat(scoreInput.value);
-      
+
       if (!uploadedImage) {
         alert('请先上传图片');
         return;
       }
-      
+
       if (!score || score < 1 || score > 10) {
         alert('请输入1-10之间的分数');
         return;
@@ -401,10 +402,10 @@
       }
 
       // 加载并绘制小程序码
-      const qrCodeUrl = 'https://www.youxiaojia.cn/images/avatars/xcx/face/images/erzong.jpg';
+      const qrCodeUrl = '/images/kanlian/qrcode.jpg';
       const qrImage = new Image();
       qrImage.crossOrigin = 'anonymous';
-      
+
       qrImage.onload = () => {
         // 绘制小程序码(居中放置)
         const qrSize = 200;
@@ -462,4 +463,5 @@
     });
   </script>
 </body>
+
 </html>

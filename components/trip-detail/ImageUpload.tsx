@@ -2,19 +2,26 @@
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
 
-const ImageUploader = ({ onUpload }) => {
-  const onDrop = (acceptedFiles) => {
+type ImageUploaderProps = {
+  onUpload: (file: File) => void;
+};
+
+const ImageUploader = ({ onUpload }: ImageUploaderProps) => {
+  const onDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       onUpload(acceptedFiles[0]);
     }
   };
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: { "image/*": [] },
+  });
 
   return (
     <div {...getRootProps({ className: 'dropzone' })}>
       <input {...getInputProps()} />
-      <p>Drag 'n' drop some files here, or click to select files</p>
+      <p>Drag &apos;n&apos; drop some files here, or click to select files</p>
     </div>
   );
 };

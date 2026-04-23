@@ -12,11 +12,10 @@ import { defaultLocale, localeNames } from "@/lib/i18n";
 
 export const LangSwitcher = () => {
   const params = useParams();
-  const lang = params.lang;
+  const langParam = params?.lang;
+  const lang = Array.isArray(langParam) ? langParam[0] : langParam;
 
-  // const lang = (params.lang && params.lang[0]) || defaultLocale;
-  let langName =
-    lang && lang[0] && lang[0] !== "index" ? lang[0] : defaultLocale;
+  const langName = lang && lang !== "index" ? lang : defaultLocale;
   const router = useRouter();
 
   const handleSwitchLanguage = (value: string) => {

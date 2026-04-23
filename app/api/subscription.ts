@@ -1,8 +1,9 @@
-import {getAuth} from "@clerk/nextjs/server"
-import { subscriptionHandler } from "@use-stripe-subscription";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { getAuth } from "@clerk/nextjs/server"
+import { subscriptionHandler } from "use-stripe-subscription";
 import { findOrCreateCustomerId } from "../../utils/findOrCreateCustomerId";
 
-const handler = (async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Determine the Stripe Customer ID for this request
   // use-stripe-subscription doesn't care how you implement this...
   // you can make it specific to the user, or specific to their organization
@@ -19,6 +20,6 @@ const handler = (async (req, res) => {
   res.json(
     await subscriptionHandler({ customerId, query: req.query, body: req.body })
   );
-});
+};
 
 export default handler;

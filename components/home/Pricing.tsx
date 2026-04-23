@@ -86,7 +86,7 @@ const Pricing = ({
               <StripeButton
                 buttonText="Pay with Stripe"
                 buttonColor="primary"
-                buttonVariant="contained"
+                buttonVariant="solid"
                 priceId="price_1PBDOEP9CNElYosA3FMOXAHe"
               />
             </CardFooter>

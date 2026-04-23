@@ -10,13 +10,12 @@ import {
   Divider,
   Link,
   Spacer,
-  Text,
 } from "@nextui-org/react";
 import { FaUpload, FaCheck } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
 import { siteConfig } from "@/config/site";
 import ImageUploader from "../trip-detail/ImageUpload"; // Custom ImageUploader component
-import {getStorageSuggestions} from "../trip-detail/storageSuggestions"; // Utility function for storage suggestions
+import { getStorageSuggestions } from "../trip-detail/storageSuggestionUtils"; // Utility function for storage suggestions
 
 const StorageSuggestions = ({
   id,
@@ -30,7 +29,7 @@ const StorageSuggestions = ({
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  const handleImageUpload = (image: File) => {
+  const handleImageUpload = (image: File | null) => {
     setUploadedImage(image);
     const storageSuggestions = getStorageSuggestions(image);
     setSuggestions(storageSuggestions);
@@ -90,7 +89,7 @@ const StorageSuggestions = ({
               fullWidth
               color="primary"
               onClick={handleButtonClick}
-              variant="contained"
+              variant="solid"
             >
               <FaUpload className="mr-2" />
               {locale.uploadButtonText}

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三方分润动态核算器</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-sec: #f5f5f4;
+    --bg-tert: #efefed;
+    --bg-info: #e6f1fb;
+    --bg-success: #eaf3de;
+    --bg-warning: #faeeda;
+    --bg-danger: #fcebeb;
+    --text: #1a1a18;
+    --text-sec: #6b6b67;
+    --text-tert: #9b9b97;
+    --text-info: #185FA5;
+    --text-success: #3B6D11;
+    --text-warning: #BA7517;
+    --text-danger: #A32D2D;
+    --border: rgba(0,0,0,0.12);
+    --border-sec: rgba(0,0,0,0.22);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a;
+      --bg-sec: #262624;
+      --bg-tert: #303030;
+      --bg-info: #0c2540;
+      --bg-success: #152408;
+      --bg-warning: #2a1c04;
+      --bg-danger: #2a0d0d;
+      --text: #f0f0ee;
+      --text-sec: #a0a09c;
+      --text-tert: #6b6b67;
+      --text-info: #85B7EB;
+      --text-success: #97C459;
+      --text-warning: #EF9F27;
+      --text-danger: #F09595;
+      --border: rgba(255,255,255,0.12);
+      --border-sec: rgba(255,255,255,0.22);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    background: var(--bg-tert);
+    color: var(--text);
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--bg);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 36px;
+    border: 0.5px solid var(--border);
+  }
+  h1 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    font-size: 12px;
+    color: var(--text-sec);
+    margin-bottom: 28px;
+  }
+  .sl {
+    font-size: 11px;
+    color: var(--text-sec);
+    margin-bottom: 10px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .divider { border: none; border-top: 0.5px solid var(--border); margin: 1.5rem 0; }
+
+  /* 滑块区 */
+  .slider-block {
+    background: var(--bg-sec);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .srow { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .srow:last-child { margin-bottom: 0; }
+  .srow label { font-size: 12px; color: var(--text-sec); width: 96px; flex-shrink: 0; }
+  .srow input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 4px;
+    background: var(--border-sec);
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+  }
+  .srow input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--text-info);
+    cursor: pointer;
+    border: 2px solid var(--bg);
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  }
+  .srow .sv { font-size: 13px; font-weight: 500; min-width: 72px; text-align: right; }
+
+  /* 漏斗 */
+  .funnel { display: flex; align-items: stretch; gap: 6px; margin-bottom: 1.5rem; }
+  .fn {
+    background: var(--bg-sec);
+    border-radius: var(--radius-md);
+    padding: 10px 6px;
+    text-align: center;
+    flex: 1;
+  }
+  .fn .fv { font-size: 15px; font-weight: 500; }
+  .fn .fl { font-size: 10px; color: var(--text-sec); margin-top: 3px; line-height: 1.4; }
+  .arr { display: flex; align-items: center; color: var(--text-tert); font-size: 14px; flex-shrink: 0; }
+
+  /* 配比 */
+  .mix-block {
+    background: var(--bg-sec);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .mix-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .mix-row:last-of-type { margin-bottom: 0; }
+  .mix-label { font-size: 12px; color: var(--text-sec); width: 56px; flex-shrink: 0; }
+  .mix-bar-wrap {
+    flex: 1;
+    background: var(--bg);
+    border-radius: 4px;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+  .mix-bar { height: 100%; border-radius: 4px; transition: width .15s; }
+  .mix-count { font-size: 13px; font-weight: 500; min-width: 28px; text-align: center; }
+  .mix-rev { font-size: 12px; color: var(--text-sec); min-width: 80px; text-align: right; }
+  .mix-pct-input {
+    width: 52px;
+    border: 0.5px solid var(--border-sec);
+    border-radius: var(--radius-md);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 6px;
+    text-align: center;
+    font-family: inherit;
+  }
+  .mix-pct-input:focus { outline: none; border-color: var(--text-info); }
+  .mix-sum { font-size: 11px; text-align: right; margin-top: 8px; }
+
+  /* 收支 */
+  .summary-box {
+    background: var(--bg-sec);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .brow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 12px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .brow:last-child { border-bottom: none; font-weight: 500; font-size: 13px; padding-top: 10px; }
+  .brow .lbl { color: var(--text-sec); }
+  .brow .val { font-weight: 500; }
+  .red { color: #A32D2D; }
+  .green { color: #0F6E56; }
+  .blue { color: #185FA5; }
+
+  /* 梯级表 */
+  .tier-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 12px; }
+  .tier-table th {
+    font-size: 11px; font-weight: 500; color: var(--text-sec);
+    padding: 6px 8px; border-bottom: 0.5px solid var(--border);
+    text-align: center;
+  }
+  .tier-table th:first-child { text-align: left; }
+  .tier-table td {
+    padding: 5px 6px; border-bottom: 0.5px solid var(--border);
+    text-align: center; vertical-align: middle;
+  }
+  .tier-table td:first-child { text-align: left; font-size: 11px; color: var(--text-sec); }
+  .tier-table .active-tier td { background: var(--bg-info); }
+  .tier-table .active-tier td:first-child { color: var(--text-info); }
+  .pct-input {
+    width: 52px;
+    border: 0.5px solid var(--border-sec);
+    border-radius: var(--radius-md);
+    background: var(--bg-sec);
+    color: var(--text);
+    font-size: 13px; font-weight: 500;
+    padding: 4px 5px; text-align: center;
+    font-family: inherit;
+  }
+  .pct-input:focus { outline: none; border-color: var(--text-info); }
+  .sum-ok { color: var(--text-success); }
+  .sum-err { color: var(--text-danger); }
+
+  /* 三方卡片 */
+  .party-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 1.5rem; }
+  .party-card {
+    border-radius: var(--radius-lg);
+    padding: 1.1rem;
+    border: 0.5px solid var(--border);
+    background: var(--bg);
+  }
+  .party-card.you {
+    border-color: rgba(24,95,165,.35);
+    background: var(--bg-info);
+  }
+  .pc-role { font-size: 11px; font-weight: 500; margin-bottom: 8px; color: var(--text-sec); }
+  .party-card.you .pc-role { color: var(--text-info); }
+  .pc-amount { font-size: 22px; font-weight: 500; margin-bottom: 6px; }
+  .party-card.you .pc-amount { color: var(--text-info); }
+  .pc-rows { font-size: 11px; color: var(--text-sec); line-height: 1.9; }
+  .party-card.you .pc-rows { color: var(--text-info); opacity: .85; }
+  .pc-net {
+    font-size: 13px; font-weight: 500;
+    margin-top: 8px; padding-top: 8px;
+    border-top: 0.5px solid var(--border);
+  }
+  .party-card.you .pc-net { border-top-color: rgba(24,95,165,.2); }
+
+  .badge {
+    display: inline-block; font-size: 11px;
+    padding: 2px 7px; border-radius: var(--radius-md); margin-left: 4px;
+  }
+  .bok { background: var(--bg-success); color: var(--text-success); }
+  .bwarn { background: var(--bg-warning); color: var(--text-warning); }
+  .berr { background: var(--bg-danger); color: var(--text-danger); }
+
+  .note { font-size: 11px; color: var(--text-tert); line-height: 1.7; margin-top: .5rem; }
+
+  .cost-detail {
+    margin-top: 10px;
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+  }
+  .cost-detail-title {
+    font-size: 11px;
+    color: var(--text-sec);
+    margin-bottom: 8px;
+  }
+  .cost-tier {
+    padding: 8px 0;
+    border-top: 0.5px solid var(--border);
+  }
+  .cost-tier:first-of-type { border-top: none; padding-top: 0; }
+  .cost-tier-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .cost-tier-meta {
+    font-size: 11px;
+    color: var(--text-sec);
+    margin-bottom: 6px;
+  }
+  .cost-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--text-sec);
+    padding: 2px 0;
+  }
+  .cost-item span:last-child {
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 16px; }
+    .party-grid { grid-template-columns: 1fr; }
+    .funnel { flex-wrap: wrap; }
+    .fn { min-width: 70px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>三方分润动态核算器</h1>
+  <p class="subtitle">AI智能营销获客体系 · 年付合同 · 销售额−采购成本−投流后三方分润 · 含运营及税务成本</p>
+
+  <!-- 投流参数 -->
+  <p class="sl">投流参数</p>
+  <div class="slider-block">
+    <div class="srow">
+      <label>线索单价</label>
+      <input type="range" min="50" max="500" value="150" step="10" id="cpl-s" oninput="onSlider()">
+      <span class="sv" id="cpl-v">¥150 / 条</span>
+    </div>
+    <div class="srow">
+      <label>成交转化率</label>
+      <input type="range" min="1" max="30" value="5" step="1" id="cvr-s" oninput="onSlider()">
+      <span class="sv" id="cvr-v">5%</span>
+    </div>
+  </div>
+
+  <!-- 漏斗 -->
+  <div class="funnel">
+    <div class="fn"><div class="fv">¥45,000</div><div class="fl">投流/月</div></div>
+    <div class="arr">›</div>
+    <div class="fn"><div class="fv" id="f-leads">300</div><div class="fl">线索/月</div></div>
+    <div class="arr">›</div>
+    <div class="fn"><div class="fv" id="f-new" style="color:#185FA5">15</div><div class="fl">新签总数/月</div></div>
+    <div class="arr">›</div>
+    <div class="fn"><div class="fv" id="f-rev" style="color:#0F6E56">—</div><div class="fl">月度销售额</div></div>
+    <div class="arr">›</div>
+    <div class="fn"><div class="fv" id="f-gp" style="color:#BA7517">—</div><div class="fl">可分配利润</div></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 新签配比 -->
+  <p class="sl">新签客户配比（各档占比 · 合计100%）</p>
+  <div class="mix-block">
+    <div class="mix-row">
+      <span class="mix-label">基础版</span>
+      <div class="mix-bar-wrap"><div class="mix-bar" id="mix-bar-a" style="background:#5DCAA5;width:20%"></div></div>
+      <input class="mix-pct-input" type="number" id="mix-a" value="20" min="0" max="100" oninput="onMix()">
+      <span style="font-size:12px;color:var(--text-sec)">%</span>
+      <span class="mix-count" id="mc-a">3</span><span style="font-size:11px;color:var(--text-sec)">单</span>
+      <span class="mix-rev" id="mr-a">¥36,000</span>
+    </div>
+    <div class="mix-row">
+      <span class="mix-label">进阶版</span>
+      <div class="mix-bar-wrap"><div class="mix-bar" id="mix-bar-b" style="background:#378ADD;width:50%"></div></div>
+      <input class="mix-pct-input" type="number" id="mix-b" value="50" min="0" max="100" oninput="onMix()">
+      <span style="font-size:12px;color:var(--text-sec)">%</span>
+      <span class="mix-count" id="mc-b">8</span><span style="font-size:11px;color:var(--text-sec)">单</span>
+      <span class="mix-rev" id="mr-b">¥224,000</span>
+    </div>
+    <div class="mix-row">
+      <span class="mix-label">高级版</span>
+      <div class="mix-bar-wrap"><div class="mix-bar" id="mix-bar-c" style="background:#D85A30;width:30%"></div></div>
+      <input class="mix-pct-input" type="number" id="mix-c" value="30" min="0" max="100" oninput="onMix()">
+      <span style="font-size:12px;color:var(--text-sec)">%</span>
+      <span class="mix-count" id="mc-c">5</span><span style="font-size:11px;color:var(--text-sec)">单</span>
+      <span class="mix-rev" id="mr-c">¥225,000</span>
+    </div>
+    <div class="mix-sum" id="mix-sum-msg"></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 月度收支 -->
+  <p class="sl">月度收支</p>
+  <div class="summary-box">
+    <div class="brow"><span class="lbl">月度销售额（新签单数 × 年包价格）</span><span class="val" id="b-rev">—</span></div>
+    <div class="brow"><span class="lbl">减：工具采购成本（按新签单数）</span><span class="val red" id="b-tc">—</span></div>
+    <div class="cost-detail">
+      <div class="cost-detail-title">工具采购成本明细（按 PPT 单项价格汇总）</div>
+      <div id="cost-breakdown">—</div>
+    </div>
+    <div class="brow"><span class="lbl">减：投流费用</span><span class="val red">-¥45,000</span></div>
+    <div class="brow"><span class="lbl">减：运营成本（人员+销售跟进+素材制作）</span><span class="val red">-¥15,000</span></div>
+    <div class="brow"><span class="lbl">减：开票税费6% + 管理成本1%（按销售额）</span><span class="val red" id="b-tax">—</span></div>
+    <div class="brow"><span class="lbl">可分配利润（三方分润基数）</span><span class="val" id="b-gp">—</span></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 梯级比例 -->
+  <p class="sl">三方分润比例（可编辑 · 每行须 = 100%）</p>
+  <table class="tier-table">
+    <thead>
+      <tr>
+        <th>梯级</th><th>可分配利润区间</th>
+        <th>主导方</th><th>你</th><th>第三方</th><th>合计</th>
+      </tr>
+    </thead>
+    <tbody id="tier-body"></tbody>
+  </table>
+
+  <hr class="divider">
+
+  <!-- 三方分润 -->
+  <p class="sl">三方分润明细</p>
+  <div class="party-grid">
+    <div class="party-card">
+      <div class="pc-role">主导方</div>
+      <div class="pc-amount" id="p-main-amt">—</div>
+      <div class="pc-rows" id="p-main-rows">—</div>
+      <div class="pc-net" id="p-main-net">—</div>
+    </div>
+    <div class="party-card you">
+      <div class="pc-role">你（AI智能体交付）</div>
+      <div class="pc-amount" id="p-you-amt">—</div>
+      <div class="pc-rows" id="p-you-rows">—</div>
+      <div class="pc-net" id="p-you-net">—</div>
+      <div class="pc-net" id="p-you-final" style="margin-top:8px;padding-top:8px;border-top:0.5px solid rgba(24,95,165,.2)">—</div>
+    </div>
+    <div class="party-card">
+      <div class="pc-role">第三方</div>
+      <div class="pc-amount" id="p-third-amt">—</div>
+      <div class="pc-rows" id="p-third-rows">—</div>
+      <div class="pc-net" id="p-third-net">—</div>
+    </div>
+  </div>
+
+  <p class="note" id="note-t"></p>
+</div>
+
+<script>
+var ADMONTH = 45000;
+var PRICE = [12000, 28000, 45000];
+var TOOL_ITEMS = [
+  [
+    { name:'AI智能体应用', price:1199, unit:'套' },
+    { name:'抖音流量工具', price:999, unit:'年' },
+    { name:'AI短视频爆款制造机', price:999, unit:'年' }
+  ],
+  [
+    { name:'AI智能体应用', price:1199, unit:'套' },
+    { name:'AI超级员工', price:2980, unit:'年' },
+    { name:'抖音流量工具', price:999, unit:'年' },
+    { name:'小红书流量工具', price:999, unit:'年' },
+    { name:'快手流量工具', price:999, unit:'年' },
+    { name:'视频号流量工具', price:999, unit:'年' }
+  ],
+  [
+    { name:'AI智能体应用', price:1199, unit:'套' },
+    { name:'AI超级员工', price:2980, unit:'年' },
+    { name:'抖音流量工具', price:999, unit:'年' },
+    { name:'小红书流量工具', price:999, unit:'年' },
+    { name:'快手流量工具', price:999, unit:'年' },
+    { name:'视频号流量工具', price:999, unit:'年' },
+    { name:'AI短视频爆款制造机', price:999, unit:'年' },
+    { name:'AI短视频矩阵工具', price:2980, unit:'年' },
+    { name:'企业GEO应用', price:999, unit:'年' },
+    { name:'AI智能客服', price:499, unit:'年' },
+    { name:'AI智能私域商城', price:999, unit:'年' }
+  ]
+];
+var COST = TOOL_ITEMS.map(function(items){
+  return items.reduce(function(sum, item){ return sum + item.price; }, 0);
+});
+var TIERS = [
+  { label:'梯一', range:'0–10万',    rates:[65,25,10] },
+  { label:'梯二', range:'10–30万',   rates:[60,28,12] },
+  { label:'梯三', range:'30–40万',   rates:[55,32,13] },
+  { label:'梯四', range:'40万以上',  rates:[50,35,15] }
+];
+var LIMS = [100000, 300000, 400000, 1e15];
+
+function fmt(n){ return '¥' + Math.round(n).toLocaleString('zh-CN'); }
+function fmtp(n){ return (Math.round(n*10)/10) + '%'; }
+function costLine(name, value){
+  return '<div class="cost-item"><span>' + name + '</span><span>' + value + '</span></div>';
+}
+
+function buildTierTable(){
+  var tb = document.getElementById('tier-body');
+  tb.innerHTML = '';
+  TIERS.forEach(function(t, i){
+    var tr = document.createElement('tr');
+    tr.id = 'tier-row-' + i;
+    tr.innerHTML = '<td>' + t.label + '</td>' +
+      '<td style="color:var(--text-sec)">' + t.range + '</td>' +
+      [0,1,2].map(function(r){
+        return '<td><input class="pct-input" type="number" min="0" max="100" value="' +
+          t.rates[r] + '" data-t="' + i + '" data-r="' + r + '" oninput="onRate(this)"></td>';
+      }).join('') +
+      '<td id="tsum-' + i + '"></td>';
+    tb.appendChild(tr);
+  });
+  updateSums();
+}
+
+function onRate(el){
+  TIERS[+el.dataset.t].rates[+el.dataset.r] = parseFloat(el.value) || 0;
+  updateSums(); calc();
+}
+
+function updateSums(){
+  TIERS.forEach(function(t, i){
+    var s = t.rates[0] + t.rates[1] + t.rates[2];
+    var el = document.getElementById('tsum-' + i);
+    el.textContent = Math.round(s*10)/10 + '%';
+    el.className = Math.abs(s-100) < 0.5 ? 'sum-ok' : 'sum-err';
+  });
+}
+
+function splitGp(gp){
+  var rem = gp, prev = 0, you = 0, main = 0, third = 0;
+  var details = [];
+  for(var i = 0; i < TIERS.length; i++){
+    var po = LIMS[i] === 1e15 ? rem : Math.min(rem, LIMS[i] - prev);
+    if(po <= 0){ prev = LIMS[i]; details.push(null); continue; }
+    var m  = po * (TIERS[i].rates[0] / 100);
+    var y  = po * (TIERS[i].rates[1] / 100);
+    var th = po * (TIERS[i].rates[2] / 100);
+    main += m; you += y; third += th;
+    details.push({ label: TIERS[i].label, portion: po, m:m, y:y, th:th });
+    rem -= po; prev = LIMS[i]; if(rem <= 0) break;
+  }
+  return { you:you, main:main, third:third, details:details };
+}
+
+function calc(){
+  var cpl = +document.getElementById('cpl-s').value;
+  var cvr = +document.getElementById('cvr-s').value;
+  document.getElementById('cpl-v').textContent = '¥' + cpl + ' / 条';
+  document.getElementById('cvr-v').textContent = cvr + '%';
+
+  var leads  = Math.round(ADMONTH / cpl);
+  var newTotal = Math.round(leads * cvr / 100);
+  document.getElementById('f-leads').textContent = leads;
+  document.getElementById('f-new').textContent   = newTotal;
+
+  var ma  = parseFloat(document.getElementById('mix-a').value) || 0;
+  var mb  = parseFloat(document.getElementById('mix-b').value) || 0;
+  var mc2 = parseFloat(document.getElementById('mix-c').value) || 0;
+  var msum = ma + mb + mc2;
+
+  var ca = Math.round(newTotal * ma  / 100);
+  var cb = Math.round(newTotal * mb  / 100);
+  var cc = Math.max(0, newTotal - ca - cb);
+
+  document.getElementById('mc-a').textContent = ca;
+  document.getElementById('mc-b').textContent = cb;
+  document.getElementById('mc-c').textContent = cc;
+  document.getElementById('mix-bar-a').style.width = Math.min(ma, 100)  + '%';
+  document.getElementById('mix-bar-b').style.width = Math.min(mb, 100)  + '%';
+  document.getElementById('mix-bar-c').style.width = Math.min(mc2, 100) + '%';
+
+  var revA = ca * PRICE[0], revB = cb * PRICE[1], revC = cc * PRICE[2];
+  var rev  = revA + revB + revC;
+  document.getElementById('mr-a').textContent = fmt(revA);
+  document.getElementById('mr-b').textContent = fmt(revB);
+  document.getElementById('mr-c').textContent = fmt(revC);
+  document.getElementById('f-rev').textContent = fmt(rev);
+
+  var mixOk = Math.abs(msum - 100) < 0.5;
+  var sumEl  = document.getElementById('mix-sum-msg');
+  sumEl.textContent = '三档合计：' + Math.round(msum*10)/10 + '%' + (mixOk ? ' ✓' : '  ← 请调整至100%');
+  sumEl.style.color = mixOk ? 'var(--text-success)' : 'var(--text-danger)';
+
+  var tc      = ca * COST[0] + cb * COST[1] + cc * COST[2];
+  var taxCost = rev * 0.07;
+  var mainOps = 15000;
+  var gp      = rev - tc - ADMONTH - mainOps - taxCost;
+  var gpPos   = Math.max(0, gp);
+
+  document.getElementById('b-rev').textContent = fmt(rev);
+  document.getElementById('b-tc').textContent  = '-' + fmt(tc);
+
+  var packageNames = ['基础版', '进阶版', '高级版'];
+  var packageCounts = [ca, cb, cc];
+  var breakdownHtml = TOOL_ITEMS.map(function(items, idx){
+    if(packageCounts[idx] <= 0) return '';
+    var unitCost = COST[idx];
+    var itemHtml = items.map(function(item){
+      return costLine(item.name, '¥' + item.price.toLocaleString('zh-CN') + ' / ' + item.unit);
+    }).join('');
+    return '<div class="cost-tier">' +
+      '<div class="cost-tier-head"><span>' + packageNames[idx] + ' × ' + packageCounts[idx] + ' 单</span><span>' + fmt(unitCost * packageCounts[idx]) + '</span></div>' +
+      '<div class="cost-tier-meta">单套采购成本 ' + fmt(unitCost) + '</div>' +
+      itemHtml +
+    '</div>';
+  }).filter(Boolean).join('');
+  document.getElementById('cost-breakdown').innerHTML = breakdownHtml || '<span style="font-size:11px;color:var(--text-sec)">当前无新签，暂无采购成本明细</span>';
+  var bgpEl = document.getElementById('b-gp');
+  bgpEl.textContent = fmt(gpPos) + (gp < 0 ? ' ⚠ 未覆盖成本' : '');
+  bgpEl.className   = 'val ' + (gp >= 0 ? 'green' : 'red');
+  document.getElementById('f-gp').textContent  = fmt(gpPos);
+
+  var sp    = splitGp(gpPos);
+  var total = ca + cb + cc;
+
+  for(var i = 0; i < TIERS.length; i++){
+    var row = document.getElementById('tier-row-' + i);
+    if(row) row.className = sp.details[i] ? 'active-tier' : '';
+  }
+
+  function pctOfRev(v){ return rev > 0 ? fmtp(v / rev * 100) : '—'; }
+  function perDeal(v){ return total > 0 ? '均摊每单 ' + fmt(v / total) : '—'; }
+  function tierLines(){
+    return sp.details.filter(Boolean).map(function(d){
+      return '<span style="opacity:.7">' + d.label + ' ' + fmt(d.portion) + '</span>';
+    }).join('<br>');
+  }
+
+  // main card handled above
+
+  // 可分配利润已扣除投流+运营+税费，三方分润即为各自净到手
+  document.getElementById('b-tax').textContent = '-' + fmt(taxCost);
+
+  // 主导方卡片：分润即净利，无需再扣
+  document.getElementById('p-main-amt').textContent = fmt(sp.main);
+  document.getElementById('p-main-rows').innerHTML  = '占销售额 ' + pctOfRev(sp.main) + '<br>' + perDeal(sp.main) + '<br>' + tierLines();
+  var mbdgTxt = sp.main >= 0 ? '盈利' : '亏损';
+  var mbdgCls = sp.main >= 0 ? 'bok' : 'berr';
+  document.getElementById('p-main-net').innerHTML =
+    '净到手 <span style="font-size:17px;font-weight:500">' + fmt(sp.main) + '</span>' +
+    ' <span class="badge ' + mbdgCls + '">' + mbdgTxt + '</span>';
+
+  // 你的卡片：分润即净利
+  document.getElementById('p-you-amt').textContent = fmt(sp.you);
+  document.getElementById('p-you-rows').innerHTML  = '占销售额 ' + pctOfRev(sp.you) + '<br>' + perDeal(sp.you) + '<br>' + tierLines();
+  var fdgTxt = sp.you >= 0 ? '盈利' : '亏损';
+  var fdgCls = sp.you >= 0 ? 'bok' : 'berr';
+  document.getElementById('p-you-net').innerHTML =
+    '净到手 <span style="font-size:17px;font-weight:500;color:' + (sp.you > 0 ? '#185FA5' : '#A32D2D') + '">' +
+    fmt(sp.you) + '</span>' +
+    ' <span class="badge ' + fdgCls + '">' + fdgTxt + '</span>';
+  document.getElementById('p-you-final').innerHTML = '';
+
+  document.getElementById('p-third-amt').textContent = fmt(sp.third);
+  document.getElementById('p-third-rows').innerHTML  = '占销售额 ' + pctOfRev(sp.third) + '<br>' + perDeal(sp.third) + '<br>' + tierLines();
+  document.getElementById('p-third-net').textContent = '分润合计（无额外扣减）' + fmt(sp.third);
+
+  document.getElementById('note-t').textContent =
+    '本月新签 ' + total + ' 单（基础' + ca + '·进阶' + cb + '·高级' + cc + '）。' +
+    '销售额 ' + fmt(rev) + '，扣除采购 ' + fmt(tc) + ' + 投流 ¥45,000 + 运营 ¥15,000 + 税费 ' + fmt(taxCost) +
+    ' 后可分配利润 ' + fmt(gpPos) + '。' +
+    '三方净到手：主导方 ' + fmt(sp.main) + '，你 ' + fmt(sp.you) + '，第三方 ' + fmt(sp.third) + '。';
+}
+
+function onSlider(){ calc(); }
+function onMix(){ calc(); }
+
+buildTierTable();
+calc();
+</script>
+</body>
+</html>

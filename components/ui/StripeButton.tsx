@@ -2,14 +2,40 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { loadStripe } from '@stripe/stripe-js';
-import { Button } from "@/components/ui/button";
+import { Button } from "@nextui-org/react";
+import { loadStripe, type Stripe } from "@stripe/stripe-js";
 
+type StripeButtonProps = {
+  buttonColor?:
+    | "default"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger";
+  buttonText: string;
+  buttonVariant?:
+    | "solid"
+    | "bordered"
+    | "light"
+    | "flat"
+    | "faded"
+    | "shadow"
+    | "ghost";
+  priceId: string;
+};
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
+const stripePromise = process.env.NEXT_PUBLIC_STRIPE_KEY
+  ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
+  : Promise.resolve(null);
 
-const StripeButton = ({ buttonText, buttonColor, buttonVariant, priceId }) => {
-  const [stripe, setStripe] = useState(null);
+const StripeButton = ({
+  buttonText,
+  buttonColor = "primary",
+  buttonVariant = "solid",
+  priceId,
+}: StripeButtonProps) => {
+  const [stripe, setStripe] = useState<Stripe | null>(null);
 
   useEffect(() => {
     async function initStripe() {
@@ -19,7 +45,7 @@ const StripeButton = ({ buttonText, buttonColor, buttonVariant, priceId }) => {
     initStripe();
   }, []);
 
-  const handleCheckout = async () => {
+const handleCheckout = async () => {
     if (!stripe) return;
     
     const { error } = await stripe.redirectToCheckout({
