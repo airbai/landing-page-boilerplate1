@@ -1,5 +1,9 @@
-import { SignUp } from "@clerk/nextjs";
+"use client";
 
 export default function Page() {
-  return <SignUp path="/sign-up" />;
+  return (
+    <div className="flex min-h-[50vh] items-center justify-center">
+      <p className="text-muted-foreground">Sign up page (coming soon)</p>
+    </div>
+  );
 }

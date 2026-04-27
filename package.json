@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.0.6",
+
     "@formatjs/intl-localematcher": "^0.5.4",
     "@nextui-org/react": "^2.2.10",
     "@radix-ui/react-select": "^2.0.0",
@@ -23,7 +23,7 @@
     "lucide-react": "^0.316.0",
     "negotiator": "^0.6.3",
     "next": "^14.2.3",
-    "next-auth": "^4.24.7",
+
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

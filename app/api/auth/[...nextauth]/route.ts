@@ -1,13 +1,7 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+export async function GET() {
+  return new Response("Auth disabled", { status: 501 });
+}
 
-const handler = NextAuth({
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
-    }),
-  ],
-});
-
-export { handler as GET, handler as POST };
+export async function POST() {
+  return new Response("Auth disabled", { status: 501 });
+}

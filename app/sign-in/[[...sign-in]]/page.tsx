@@ -1,5 +1,9 @@
-import { SignIn } from "@clerk/nextjs";
+"use client";
 
 export default function Page() {
-  return <SignIn path="/sign-in" />;
+  return (
+    <div className="flex min-h-[50vh] items-center justify-center">
+      <p className="text-muted-foreground">Sign in page (coming soon)</p>
+    </div>
+  );
 }
